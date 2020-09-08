@@ -49,10 +49,9 @@
 
 @keyframes welcomeAnimation{
     0%{
-        color:rgb(165, 41, 41);
+        color:rgb(235, 235, 235);
     }
     100%{
         color:rgb(0, 0, 0);
-        opacity: 100%;
     }
 }
