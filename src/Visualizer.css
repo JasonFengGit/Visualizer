@@ -1,0 +1,43 @@
+.main{
+    color: rgb(32, 31, 31);
+    text-align:center;
+    height: 1000px;
+    margin-top: -50px;
+}
+.lead{
+    margin-top: 40px;
+}
+.display-4{
+    margin-top: 40px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    animation-name: welcomeAnimation;
+    animation-duration: 1.7s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    height: 700px;
+    
+}
+.navbtn{
+    font-family:'Arial';
+    font-size: 50px;
+    width: 150px;
+  }
+@keyframes welcomeAnimation{
+    0%{
+        color:rgb(255, 255, 255);
+        opacity: 0%;
+    }
+    100%{
+        color:rgb(0, 0, 0);
+        opacity: 100%;
+    }
+}

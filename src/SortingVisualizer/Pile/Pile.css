@@ -1,0 +1,25 @@
+.pile {
+    outline: 1px solid rgb(134, 116, 116);
+    display: inline-block;
+    width: 20px;
+    vertical-align: bottom;
+    margin-top: 25px;
+    position: static;
+}
+.pile-changing {
+    outline: 1px solid rgb(134, 116, 116);
+    display: inline-block;
+    width: 20px;
+    vertical-align: bottom;
+    background-color: turquoise ;
+    margin-top: 25px;
+}
+
+.pile-finished {
+  outline: 1px solid rgb(134, 116, 116);
+  display: inline-block;
+  width: 20px;
+  vertical-align: bottom;
+  background-color: rgb(111, 219, 156) ;
+  margin-top: 25px;
+}
