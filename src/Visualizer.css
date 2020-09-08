@@ -9,6 +9,8 @@
 }
 .welcome{
     margin-top: 100px;
+    color:rgb(0, 0, 0);
+    /*
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -23,8 +25,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: running;
-    height: 700px;
-    
+    height: 700px;*/
 }
 .navbtn{
     font-family:'Arial';
@@ -32,6 +33,7 @@
     width: 150px;
     height: 50;
 }
+/*
 @keyframes welcomeAnimation{
     0%{
         color:rgb(255, 255, 255);
@@ -41,4 +43,4 @@
         color:rgb(0, 0, 0);
         opacity: 100%;
     }
-}
+}*/

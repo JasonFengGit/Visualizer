@@ -91,7 +91,7 @@ export default class Visualizer extends Component {
                         }}
                         type="button" class="btn btn-dark navbtn"
                         disabled={this.state.rendering}
-                    >Per</button>
+                    >Perceptron</button>
                     <div class={"dropdown" + invisibleOrNot}>
                         <button class="btn btn-dark dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
                             Actions
