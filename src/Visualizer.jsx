@@ -44,7 +44,7 @@ export default class Visualizer extends Component {
             renderObj =
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
-                        <h1 class="display-4">Hello, algorithms.
+                        <h1 class="display-4 welcome">Hello, algorithms.
                         <p class="lead">This website might help you understand algorithms better by visualizing them.</p>
                         </h1>
                     </div>
