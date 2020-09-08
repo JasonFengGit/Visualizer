@@ -44,7 +44,7 @@ export default class Visualizer extends Component {
             renderObj =
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
-                        <h1 class="display-4 welcome">Hello, algorithms.
+                        <h1 class="welcome">Hello, algorithms.
                         <p class="lead">This website might help you understand algorithms better by visualizing them.</p>
                         </h1>
                     </div>
@@ -93,7 +93,7 @@ export default class Visualizer extends Component {
                         disabled={this.state.rendering}
                     >Perceptron</button>
                     <div class={"dropdown" + invisibleOrNot}>
-                        <button class="btn btn-dark dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
+                        <button class="btn btn-light dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
