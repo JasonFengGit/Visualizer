@@ -1,18 +1,22 @@
 .pile {
+    
     outline: 1px solid rgb(134, 116, 116);
     display: inline-block;
-    width: 20px;
     vertical-align: bottom;
-    margin-top: 25px;
+    margin-top: 150px;
+    min-width: 20px;
+    width: 20px;
     position: static;
+    
 }
+
 .pile-changing {
     outline: 1px solid rgb(134, 116, 116);
     display: inline-block;
     width: 20px;
     vertical-align: bottom;
-    background-color: turquoise ;
-    margin-top: 25px;
+    background: rgb(228, 230, 120) ;
+    margin-top: 150px;
 }
 
 .pile-finished {
@@ -20,6 +24,50 @@
   display: inline-block;
   width: 20px;
   vertical-align: bottom;
-  background-color: rgb(111, 219, 156) ;
-  margin-top: 25px;
+  
+  margin-top: 150px;
+  animation-name: pileFinishAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes pileFinishAnimation{
+  0%{
+    background-color: white;
+  }
+  100%{
+    outline-color: white;
+    font-size: 0px;
+  }
+}
+
+
+.value{
+  margin-top: 5px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;    
+  -o-user-select: none;
+  user-select: none;
+  animation-name: pileAppearAnimation;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes pileAppearAnimation{
+  0%{
+    margin-top:-100px;
+    color: white;
+  }
+  100%{
+    margin-top:5px;
+  }
 }

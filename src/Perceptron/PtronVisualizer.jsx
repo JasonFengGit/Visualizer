@@ -130,16 +130,17 @@ export default class PtronVisualizer extends Component {
                 >
                     Reset
                 </button>*/}
+
                 <Stage
                     width={this.state.width * 2}
-                    height={this.state.height}
+                    height={this.state.height + 1}
                     className='stage'
                     id='stage'
                 >
                     <Layer>
                         <Line points={[0, 0, 500, 0]} stroke={'black'} ></Line>
                         <Line points={[0, 0, 0, 0 + 500]} stroke={'black'}></Line>
-                        <Line points={[0, 0 + 500, 500 + 0, 0 + 500]} stroke={'black'}></Line>
+                        <Line points={[0, 0 + 500, 500 + 0, 0 + 500]} stroke={'black'} ></Line>
                         <Line points={[500 + 0, 0, 500 + 0, 0 + 500]} stroke={'black'} strokeWidth={1}></Line>
                         <Line
                             points={[x1 + 0, 0 + y1, x2 + 0, 0 + y2]}

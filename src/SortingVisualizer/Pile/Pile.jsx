@@ -7,6 +7,9 @@ export default class Pile extends Component {
             val,
             isChanging,
             finished,
+            colorSetIndex,
+            changingColors = [`rgb(228, 230, 120)`, `rgb(155, 147, 229)`, `rgb(248, 250, 140)`],
+            normalColors = [`rgb(200,${(1 - val / 80) * 255}, 255)`, `rgb(250,200, ${(1 - val / 80) * 255})`, `rgb( ${(1 - val / 80) * 255},200,250)`],
         } = this.props;
 
         let extraClassName = '';
@@ -16,14 +19,15 @@ export default class Pile extends Component {
         if (finished) {
             extraClassName = '-finished';
         }
-
+        let color = extraClassName == '-changing' ? changingColors[colorSetIndex] : normalColors[colorSetIndex];
         return (
             <>
                 <div
                     className={'pile' + extraClassName}
-                    style={{ height: `${val * 5}px` }}
+                    style={{ height: `${val * 5}px`, background: color }}
+
                 >
-                    {val}
+                    <p className='value'>{val}</p>
                 </div >
             </>
 

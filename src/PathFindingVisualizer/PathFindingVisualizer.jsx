@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
-import { dijkstra, getShortestPath } from '../Algorithm/dijk';
+import { dijkstra, BFS, DFS, AStar, getShortestPath } from '../Algorithm/pathfindingAlgorithms';
 import './PathFindingVisualizer.css';
 
 export default class PathFindingVisualizer extends Component {
@@ -8,33 +8,41 @@ export default class PathFindingVisualizer extends Component {
         super(props);
         this.state = {
             grid: [],
-            FR: 5,
-            FC: 25,
+            FR: 7,
+            FC: 30,
             mouseIsPressed: false,
             changingStart: false,
             changingFinish: false,
             visualized: false,
             rendering: false,
-            numRow: 15,
-            numCol: 30,
-            SR: 5,
+            numRow: 17,
+            numCol: 36,
+            SR: 7,
             SC: 5,
+            currentAlgorithm: 0,
+            algorithms: ['Dijkstra', 'BFS', 'DFS', 'A Star'],
+            pathfindingAlgorithms: [dijkstra, BFS, DFS, AStar]
         };
-        this.visualizeDijkstra = this.visualizeDijkstra.bind(this);
+        this.visualizePathfinding = this.visualizePathfinding.bind(this);
         this.clearVisualizer = this.clearVisualizer.bind(this);
-        this.props.getFunctions(this.visualizeDijkstra, this.clearVisualizer);
+        this.setAlgorithm = this.setAlgorithm.bind(this);
+        this.props.getFunctions(this.visualizePathfinding, this.clearVisualizer, this.setAlgorithm, this.state.algorithms);
     }
+
+    setAlgorithm(algoId) {
+        this.setState({ currentAlgorithm: algoId });
+    }
+
     isRendering() {
         return this.state.rendering;
     }
+
     componentDidMount() {
         const grid = this.initializeGrid(false);
-        console.log(grid);
         this.setState({
             grid: grid,
         })
         this.state.grid = grid;
-        console.log(this);
     }
 
     initializeGrid(clearWall) {
@@ -143,16 +151,15 @@ export default class PathFindingVisualizer extends Component {
         grid[row][col] = newNode;
     }
 
-    visualizeDijkstra() {
+    visualizePathfinding() {
         if (this.state.rendering) return;
         this.setState({ visualized: true, rendering: true });
         this.props.setVisualizerRendering(true);
         this.componentDidMount();
-        console.log(this);
         const grid = this.state.grid;
         const start = grid[this.state.SR][this.state.SC];
         const finish = grid[this.state.FR][this.state.FC];
-        const visitedInOrder = dijkstra(grid, start, finish);
+        const visitedInOrder = this.state.pathfindingAlgorithms[this.state.currentAlgorithm](grid, start, finish);
         const shortedPath = getShortestPath(finish);
 
         for (let i = 0; i < visitedInOrder.length; i++) {
@@ -192,7 +199,7 @@ export default class PathFindingVisualizer extends Component {
             <>
                 {/*
                 <button
-                    onClick={() => { this.visualizeDijkstra() }}
+                    onClick={() => { this.visualizePathfinding() }}
                     type="button" class="btn btn-outline-dark"
                     disabled={this.state.rendering}>
                     visualize

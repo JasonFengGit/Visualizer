@@ -8,10 +8,13 @@ export default class Visualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'main',
+            mode: 'sorting',
             rendering: false,
+            algorithms: [],
+            currentAlgorithm: null,
             goFunction: () => { },
             resetFunction: () => { },
+            setAlgorithm: () => { },
         };
         this.getFunctions = this.getFunctions.bind(this);
         this.changeRenderingState = this.changeRenderingState.bind(this);
@@ -21,11 +24,13 @@ export default class Visualizer extends Component {
         this.setState({ rendering: rendering });
     }
 
-    getFunctions(go, reset) {
+    getFunctions(go, reset, setAlgo, algorithms) {
         //console.log(go);
         this.state.goFunction = go;
         this.state.resetFunction = reset;
-        //console.log(this.state.goFunction)
+        this.state.setAlgorithm = setAlgo;
+        this.state.algorithms = algorithms;
+        this.setState({ algorithms: algorithms });
         //this.state.goFunction();
     }
 
@@ -42,19 +47,45 @@ export default class Visualizer extends Component {
         }
         else {
             renderObj =
-                <div class="jumbotron jumbotron-fluid">
-                    <div class="container">
-                        <h1 class="welcome">Hello, algorithms.
-                        <p class="lead">This website might help you understand algorithms better by visualizing them.</p>
+                <div class="welbotron">
+                    <div class="container welc">
+                        <h1 class='welcome'>Hello, algorithms.
+                            <p class="lead">This website might help you understand algorithms better by visualizing them.</p>
+                            <p class="secondline lead">Click on one of the categories below to visualize algorithms.</p>
                         </h1>
+                        <a href='#' className='mainpage b' onClick={() => {
+                            if (!this.state.rendering) {
+                                this.setState({ mode: 'pathfinding' });
+                            }
+                        }}>
+                            <span></span>
+                            PATH-FINDING
+                        </a>
+                        <a href='#' className='mainpage b' onClick={() => {
+                            if (!this.state.rendering) {
+                                this.setState({ mode: 'sorting' });
+                            }
+                        }}>
+                            <span></span>
+                            SORTING
+                        </a>
+                        <a href='#' className='mainpage b' onClick={() => {
+                            if (!this.state.rendering) {
+                                this.setState({ mode: 'perceptron' });
+                            }
+                        }}>
+                            <span></span>
+                            Machine-Learning
+                        </a>
                     </div>
                 </div>
         }
         let invisibleOrNot = '';
         if (this.state.mode === 'main') invisibleOrNot = ' invisible';
+        let algorithms = this.state.algorithms;
         return (
             <>
-                <nav class="navbar navbar-expand-lg navbar-light  bg-dark">
+                <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-dark">
 
                     <button
                         onClick={() => {
@@ -69,15 +100,17 @@ export default class Visualizer extends Component {
                         onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'pathfinding' });
+                                this.setState({ currentAlgorithm: null });
                             }
                         }}
                         type="button" class="btn btn-dark navbtn"
                         disabled={this.state.rendering}
-                    >Pathfinding</button>
+                    >PathFinding</button>
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'sorting' });
+                                this.setState({ currentAlgorithm: null });
                             }
                         }}
                         type="button" class="btn btn-dark navbtn"
@@ -87,11 +120,12 @@ export default class Visualizer extends Component {
                         onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'perceptron' });
+                                this.setState({ currentAlgorithm: null });
                             }
                         }}
                         type="button" class="btn btn-dark navbtn"
                         disabled={this.state.rendering}
-                    >Perceptron</button>
+                    >MachineLearning</button>
                     <div class={"dropdown" + invisibleOrNot}>
                         <button class="btn btn-light dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
                             Actions
@@ -100,6 +134,24 @@ export default class Visualizer extends Component {
                             <li>
                                 <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()}>Go!</button>
                                 <button type="button" class="btn btn-light navbtn" onClick={() => this.state.resetFunction()}>Reset</button>
+                            </li>
+                        </div>
+                    </div>
+                    <div class={"dropdown" + invisibleOrNot}>
+                        <button class="btn btn-secondary dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
+                            {this.state.currentAlgorithm == null ? 'Algorithms' : this.state.currentAlgorithm}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                {algorithms.map((algorithm, algoId) => {
+                                    console.log(algorithm);
+                                    return (<button type="button" class="btn btn-light navbtn" onClick={() => {
+                                        this.state.setAlgorithm(algoId);
+                                        this.setState({ currentAlgorithm: this.state.algorithms[algoId] });
+                                    }}>{algorithm}</button>);
+                                }
+                                )
+                                }
                             </li>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-export function selectionSort(piles) {
+function selectionSort(piles) {
 
     let statesInOrder = [];
     for (let i = 0; i < piles.length - 1; i++) {
@@ -11,8 +11,27 @@ export function selectionSort(piles) {
         const tempVal = piles[minId];
         piles[minId] = piles[i];
         piles[i] = tempVal;
-        const temp = { piles: piles.slice(), minId, i };
+        const temp = { piles: piles.slice(), changing: [minId, i] };
         statesInOrder.push(temp);
     }
     return statesInOrder;
 }
+
+function bubbleSort(piles) {
+    return piles;
+}
+
+function insertionSort(piles) {
+    return piles;
+}
+
+function mergeSort(piles) {
+    return piles;
+}
+
+
+function quickSort(piles) {
+    return piles;
+}
+
+export { selectionSort, bubbleSort, insertionSort, mergeSort, quickSort };

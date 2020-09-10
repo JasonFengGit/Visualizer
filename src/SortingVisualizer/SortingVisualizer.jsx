@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import './SortingVisualizer.css';
 import Pile from './Pile/Pile';
-import { selectionSort } from '../Algorithm/selectionSort';
+import { selectionSort, bubbleSort, insertionSort, mergeSort, quickSort } from '../Algorithm/sortingAlgorithms';
 
 export default class SortingVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             piles: [],
-            numPiles: 30,
-            sortingAlgorithm: 'selection',
+            numPiles: 40,
             finished: false,
-            maxPile: 100,
-            idA: -1,
-            idB: -1,
+            maxPile: 80,
+            changingPiles: [],
+            colorSetIndex: getRandomInt(0, 3),
+            currentAlgorithm: 0,
+            algorithms: ['Selection Sort', 'Bubble Sort', 'Insertion Sort', 'Merge Sort', 'Quick Sort'],
+            sortingAlgorithms: [selectionSort, bubbleSort, insertionSort, mergeSort, quickSort]
         };
         this.randomizePiles = this.randomizePiles.bind(this);
         this.visualizeSorting = this.visualizeSorting.bind(this);
-        this.props.getFunctions(this.visualizeSorting, this.randomizePiles);
+        this.setAlgorithm = this.setAlgorithm.bind(this);
+        this.props.getFunctions(this.visualizeSorting, this.randomizePiles, this.setAlgorithm, this.state.algorithms);
 
     }
     componentDidMount() {
@@ -25,6 +28,10 @@ export default class SortingVisualizer extends Component {
         this.setState({
             piles: piles,
         })
+    }
+
+    setAlgorithm(algoId) {
+        this.setState({ currentAlgorithm: algoId });
     }
 
     initializePiles() {
@@ -40,26 +47,24 @@ export default class SortingVisualizer extends Component {
         this.setState({ rendering: true });
         this.props.setVisualizerRendering(true);
         const piles = this.state.piles.slice();
-        if (this.state.sortingAlgorithm === 'selection') {
-            const statesInOrder = selectionSort(piles);
 
-            for (let i = 0; i < statesInOrder.length; i++) {
-                const { piles: state, minId: idA, i: idB } = statesInOrder[i];
-                setTimeout(() => {
-                    this.setState({ piles: state, idA: idA, idB: idB })
-                }, 150 * i);
-
-            }
+        const statesInOrder = this.state.sortingAlgorithms[this.state.currentAlgorithm](piles);
+        for (let i = 0; i < statesInOrder.length; i++) {
+            const { piles: state, changing: changingPiles } = statesInOrder[i];
             setTimeout(() => {
-                this.setState({ rendering: false, finished: true });
-                this.props.setVisualizerRendering(false);
-            }, 150 * statesInOrder.length);
+                this.setState({ piles: state, changingPiles: changingPiles });
+            }, 150 * i);
+
         }
+        setTimeout(() => {
+            this.setState({ rendering: false, finished: true });
+            this.props.setVisualizerRendering(false);
+        }, 150 * statesInOrder.length);
     }
 
     randomizePiles() {
         if (this.state.rendering) return;
-        this.setState({ finished: false, idA: -1, idB: -1 });
+        this.setState({ finished: false, changingPiles: [], colorSetIndex: getRandomInt(0, 3) });
         const piles = this.initializePiles();
         this.setState({ piles: piles });
     }
@@ -90,7 +95,8 @@ export default class SortingVisualizer extends Component {
                                     className='pile'
                                     key={pileId}
                                     val={pile}
-                                    isChanging={pileId === this.state.idA || pileId === this.state.idB}
+                                    isChanging={this.state.changingPiles.indexOf(pileId) !== -1}
+                                    colorSetIndex={this.state.colorSetIndex}
                                 ></Pile>
                             )
                         })

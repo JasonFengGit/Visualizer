@@ -1,4 +1,4 @@
-export function dijkstra(grid, start, finish) {
+function dijkstra(grid, start, finish) {
     const visitedInOrder = [];
     start.distance = 0;
     const univisited = allNodes(grid);
@@ -14,6 +14,19 @@ export function dijkstra(grid, start, finish) {
     }
     return visitedInOrder;
 
+}
+
+function DFS(grid, start, finsish) {
+
+}
+
+function BFS(grid, start, finish) {
+    console.log(1);
+    return;
+}
+
+function AStar(grid, start, finish) {
+    return;
 }
 
 function allNodes(grid) {
@@ -46,7 +59,7 @@ function updateUnvisitedNeighbors(closest, grid) {
     }
 }
 
-export function getShortestPath(finish) {
+function getShortestPath(finish) {
     const path = [];
     let cur = finish;
     while (cur !== null) {
@@ -55,3 +68,5 @@ export function getShortestPath(finish) {
     }
     return path;
 }
+
+export { dijkstra, BFS, DFS, AStar, getShortestPath };

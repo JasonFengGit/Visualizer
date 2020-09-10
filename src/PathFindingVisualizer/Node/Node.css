@@ -1,7 +1,7 @@
 .node {
   width: 30px;
   height: 30px; 
-  outline: 1px solid rgb(187, 185, 185);
+  outline: 1px solid rgb(175, 174, 174);
   display: inline-block;
   
 }
@@ -85,7 +85,7 @@
   }
   100%{
     transform: scale(1);
-    background-color: rgb(148, 148, 142);
+    background-color: rgb(126, 126, 121);
   }
 }
 
@@ -105,25 +105,23 @@
     transform: scale(0.3);
     border-radius: 50%;
     outline: 0px;
-    background-color: rgba(0, 0, 66, 0.75);
+    background-color: rgba(89, 224, 202, 0.75);
     border-radius: 100%;
   }
-
   50% {
-    transform: rotate(50);
     outline: 0px;
-    background-color: rgba(17, 104, 217, 0.75);
+    background-color: rgba(12, 37, 180, 0.75);
   }
 
-  65% {
+  60% {
     transform: scale(1);
     outline: 1px;
-    background-color: rgba(0, 217, 159, 0.75);
+    background-color: rgba(60, 96, 196, 0.75);
   }
 
   100% {
     transform: scale(1);
-    background-color: rgba(127, 211, 224, 0.75);
+    background-color: rgba(129, 209, 219, 0.774);
   }
 }
 
@@ -141,17 +139,16 @@
 @keyframes shortestPath {
   0% {
     transform: scale(0.6);
-    border-radius: 50%;
-    background-color: rgb(255, 254, 106);
+    background-color: rgb(226, 184, 137);
   }
 
   50% {
     transform: scale(1.2);
-    background-color: rgb(255, 254, 106);
+    background-color: rgb(214, 117, 7);
   }
 
   100% {
     transform: scale(1);
-    background-color: rgb(255, 254, 106);
+    background-color: rgb(230, 214, 170);
   }
 }
