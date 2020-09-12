@@ -24,7 +24,7 @@ export default class Pile extends Component {
             <>
                 <div
                     className={'pile' + extraClassName}
-                    style={{ height: `${val * 10}px`, background: color }}
+                    style={{ height: `${val * 8}px`, background: color }}
 
                 >
                     <p className='value'>{val}</p>
