@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
-import { dijkstra, BFS, DFS, AStar, getShortestPath } from '../Algorithm/pathfindingAlgorithms';
+import { dijkstra, BFS, DFS, AStar, getShortestPath, recursiveDivisionMaze, primMaze } from '../Algorithm/pathfindingAlgorithms';
 import './PathFindingVisualizer.css';
 
 export default class PathFindingVisualizer extends Component {
@@ -9,19 +9,19 @@ export default class PathFindingVisualizer extends Component {
         this.state = {
             grid: [],
             FR: 7,
-            FC: 30,
+            FC: 31,
             mouseIsPressed: false,
             changingStart: false,
             changingFinish: false,
             visualized: false,
             rendering: false,
             numRow: 17,
-            numCol: 36,
+            numCol: 37,
             SR: 7,
             SC: 5,
-            currentAlgorithm: 0,
-            algorithms: ['Dijkstra', 'BFS', 'DFS', 'A Star'],
-            pathfindingAlgorithms: [dijkstra, BFS, DFS, AStar]
+            currentAlgorithm: -1,
+            algorithms: ['BFS', 'Dijkstra', 'A Star', 'DFS'],
+            pathfindingAlgorithms: [BFS, dijkstra, AStar, DFS]
         };
         this.visualizePathfinding = this.visualizePathfinding.bind(this);
         this.clearVisualizer = this.clearVisualizer.bind(this);
@@ -79,10 +79,10 @@ export default class PathFindingVisualizer extends Component {
     }
 
     handleMouseDown(row, col) {
-        if (!this.state.visualized && row === this.state.SR && col === this.state.SC) {
+        if (row === this.state.SR && col === this.state.SC) {
             this.setState({ changingStart: true });
         }
-        else if (!this.state.visualized && row === this.state.FR && col === this.state.FC) {
+        else if (row === this.state.FR && col === this.state.FC) {
             this.setState({ changingFinish: true });
         }
         else if (!this.state.rendering) {
@@ -152,6 +152,7 @@ export default class PathFindingVisualizer extends Component {
     }
 
     visualizePathfinding() {
+        if (this.state.currentAlgorithm == -1) return;
         if (this.state.rendering) return;
         this.setState({ visualized: true, rendering: true });
         this.props.setVisualizerRendering(true);
@@ -238,6 +239,20 @@ export default class PathFindingVisualizer extends Component {
                     })
                     }
                 </div>
+                {/*
+                <button
+                    onClick={() => { recursiveDivisionMaze(this.state.grid); this.setState({ finish: false }) }}
+                    type="button" class="btn btn-outline-dark"
+                    disabled={this.state.rendering}>
+                    recursive maze
+                </button>*/}
+                <button
+                    onClick={() => { primMaze(this.state.grid); this.setState({ finish: false }) }}
+                    type="button" class="btn btn-outline-dark"
+                    style={{ "margin-top": "5px", "height": "30px" }}
+                    disabled={this.state.rendering}>
+                    <p style={{ "margin-top": "-6px" }}>generate maze</p>
+                </button>
             </>
         )
     }

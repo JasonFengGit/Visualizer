@@ -1,6 +1,6 @@
 .node {
-  width: 30px;
-  height: 30px; 
+  width: 25px;
+  height: 25px; 
   outline: 1px solid rgb(175, 174, 174);
   display: inline-block;
   
@@ -16,7 +16,7 @@
   animation-fill-mode: forwards;
   animation-play-state: running;
   background-image: url('finish.svg');
-  background-size: 30px 30px;
+  background-size: 25px 25px;
 }
   
 @keyframes finishNodeAnimation{
@@ -42,7 +42,7 @@
   animation-fill-mode: forwards;
   animation-play-state: running;
   background-image: url('start.svg');
-  background-size: 30px 30px;
+  background-size: 25px, 25px;
   outline: 0px;
 }
 

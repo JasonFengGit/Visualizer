@@ -3,12 +3,13 @@
     outline: 1px solid rgb(134, 116, 116);
     display: inline-block;
     vertical-align: bottom;
-    margin-top: 150px;
+    margin-top: 130px;
+    position: static;
     min-width: 20px;
     width: 20px;
-    position: static;
     
 }
+
 
 .pile-changing {
     outline: 1px solid rgb(134, 116, 116);
@@ -16,7 +17,7 @@
     width: 20px;
     vertical-align: bottom;
     background: rgb(228, 230, 120) ;
-    margin-top: 150px;
+    margin-top: 130px;
 }
 
 .pile-finished {
@@ -25,7 +26,7 @@
   width: 20px;
   vertical-align: bottom;
   
-  margin-top: 150px;
+  margin-top: 130px;
   animation-name: pileFinishAnimation;
   animation-duration: 1s;
   animation-timing-function: ease-out;
@@ -54,7 +55,7 @@
   -o-user-select: none;
   user-select: none;
   animation-name: pileAppearAnimation;
-    animation-duration: 0.8s;
+    animation-duration: 2s;
     animation-timing-function: ease-out;
     animation-delay: 0;
     animation-direction: alternate;
@@ -64,7 +65,7 @@
 
 @keyframes pileAppearAnimation{
   0%{
-    margin-top:-100px;
+    margin-top:5px;
     color: white;
   }
   100%{

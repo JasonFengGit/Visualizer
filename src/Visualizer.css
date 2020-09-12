@@ -8,8 +8,34 @@
     margin-top: -50px;
     
 }
-.lead{
+
+.quote{
+    margin-left: 500px;
     margin-top: 30px;
+    font-size: 17px;
+    font-family: monospace;
+    color: white;
+    animation-name: quoteAnimation;
+    animation-duration: 3s;
+    animation-delay: 1.2s;
+    animation-timing-function: ease-out;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes quoteAnimation{
+    0%{
+        color: white;
+    }
+    100%{
+        color: rgb(104, 104, 104);
+    }
+}
+
+.quote + .lead{
+    margin-top: 20px;
 }
 
 .welbotron{
@@ -47,6 +73,7 @@
     margin-left: 3px;
     width: 140px;
     max-height: 40px;
+    
 }
 
 @keyframes welcomeAnimation{
@@ -67,8 +94,8 @@
     align-items: center;
     min-height: 100vh;
     font-family: consolas;
-    
 }
+
 h1+a{
     margin-left: 20px;
     color: rgb(255, 255, 255);
@@ -79,8 +106,13 @@ a+a{
     background: rgb(255, 255, 255);
 }
 a{  
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     margin-left: 40px;
-    margin-top: 60px;
+    margin-top: 50px;
     position: relative;
     min-width: 100px;
     display: inline-block;
@@ -90,7 +122,7 @@ a{
     text-decoration: none !important;
     overflow: hidden;
     transition: 0.2s;
-    
+    color: rgb(235, 235, 235);
     animation-name: buttonAnimation;
     animation-duration: 2s;
     animation-delay: 0.75s;
@@ -99,7 +131,6 @@ a{
     animation-direction: alternate;
     animation-fill-mode: forwards;
     animation-play-state: running;
-
 }
 
 @keyframes buttonAnimation{
@@ -137,4 +168,47 @@ a span:nth-child(1){
 a:hover span:nth-child(1){
     left: 100%;
     transition: 1s;
+}
+
+.modal-body-alert{
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.intro{
+    text-align: left;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.uses-list{
+    margin-top: 10px;
+    margin-left: 10px;
+    line-height: 0.5;
+    font-family: monospace;
+}
+
+.tips{
+    color: rgb(99, 99, 99);
+    margin-top: -15px;
+    font-size: 16px;
+}
+
+.simg{
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 3px;
+    height: 30px;
+    width: 30px;
+    background-image: url("s.svg");
+    background-size: 30px, 30px;
+}
+
+.fimg{
+    margin-left: 3px;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background-image: url("f.svg");
+    background-size: 30px, 30px;
 }
