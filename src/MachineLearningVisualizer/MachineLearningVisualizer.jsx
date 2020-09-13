@@ -11,7 +11,6 @@ export default class MachineLearningVisualizer extends Component {
             visualizeML: () => { },
             reset: () => { }
         };
-        console.log(123)
         this.state.reset = this.state.reset.bind(this.state);
         this.state.visualizeML = this.state.visualizeML.bind(this.state);
         this.getMLFunctions = this.getMLFunctions.bind(this);
@@ -35,7 +34,7 @@ export default class MachineLearningVisualizer extends Component {
         let renderObj;
         switch (this.state.currentAlgorithm) {
             case -1:
-                renderObj = <div class="MLW" styles={{ backgroundImage: `url(${background})`, "margin-top": "100px" }}><h1 style={{ height: "1000px", marginTop: "-350px", backgroundImage: `url(${background})` }}>This is red car</h1></div>
+                renderObj = <div></div>
                 break;
             case 0:
                 renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></PtronVisualizer>
