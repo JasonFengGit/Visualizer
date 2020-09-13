@@ -41,6 +41,7 @@ export default class PathFindingVisualizer extends Component {
         const grid = this.initializeGrid(false);
         this.setState({
             grid: grid,
+            currentAlgorithm: -1
         })
         this.state.grid = grid;
     }
@@ -72,6 +73,7 @@ export default class PathFindingVisualizer extends Component {
             isStart: row === this.state.SR && col === this.state.SC,
             isFinish: row === this.state.FR && col === this.state.FC,
             distance: Infinity,
+            heuristic: Infinity,
             isVisited: false,
             isWall: isW,
             previousNode: null,
@@ -92,7 +94,12 @@ export default class PathFindingVisualizer extends Component {
     }
 
     handleMouseEnter(row, col) {
-        if (this.state.changingStart && !(row === this.state.FR && col === this.state.FC)) {
+        if (this.state.mouseIsPressed) {
+            this.updateGridWithWall(this.state.grid, row, col);
+            this.setState({ mouseIsPressed: true });
+        }
+
+        else if (this.state.changingStart && !(row === this.state.FR && col === this.state.FC)) {
             const start = document.getElementById(`node-${this.state.SR}-${this.state.SC}`);
             if (start) {
                 start.className = 'node';
@@ -105,12 +112,10 @@ export default class PathFindingVisualizer extends Component {
                 newStart.className = 'node node-start';
                 this.state.grid[row][col].isStart = true;
             }
-            if (start && newStart) {
-                this.setState({ SR: row, SC: col });
-                //console.log(11, row, col, this.state.SR, this.state.SC);
-                //this.setState({ SR: row, SC: col });
-                //console.log(11, row, col, this.state.SR, this.state.SC);
-            }
+            this.setState({ SR: row, SC: col });
+            //console.log(11, row, col, this.state.SR, this.state.SC);
+            //this.setState({ SR: row, SC: col });
+            //console.log(11, row, col, this.state.SR, this.state.SC);
 
         }
         else if (this.state.changingFinish && !(row === this.state.SR && col === this.state.SC)) {
@@ -128,10 +133,7 @@ export default class PathFindingVisualizer extends Component {
             }
             this.setState({ FR: row, FC: col });
         }
-        else if (this.state.mouseIsPressed) {
-            this.updateGridWithWall(this.state.grid, row, col);
-            this.setState({ mouseIsPressed: true });
-        }
+
     }
 
     handleMouseUp() {
@@ -154,15 +156,19 @@ export default class PathFindingVisualizer extends Component {
     visualizePathfinding() {
         if (this.state.currentAlgorithm == -1) return;
         if (this.state.rendering) return;
+
         this.setState({ visualized: true, rendering: true });
         this.props.setVisualizerRendering(true);
-        this.componentDidMount();
+        let g = this.initializeGrid(false);
+        this.setState({
+            grid: g
+        });
+        this.state.grid = g;
         const grid = this.state.grid;
         const start = grid[this.state.SR][this.state.SC];
         const finish = grid[this.state.FR][this.state.FC];
         const visitedInOrder = this.state.pathfindingAlgorithms[this.state.currentAlgorithm](grid, start, finish);
         const shortedPath = getShortestPath(finish);
-
         for (let i = 0; i < visitedInOrder.length; i++) {
             setTimeout(() => {
                 const node = visitedInOrder[i];

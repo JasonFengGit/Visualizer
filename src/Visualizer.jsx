@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PathFindingVisualizer from './PathFindingVisualizer/PathFindingVisualizer';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
-import PtronVisualizer from './Perceptron/PtronVisualizer'
 import './Visualizer.css'
+import MachineLearningVisualizer from './MachineLearningVisualizer/MachineLearningVisualizer';
 
 export default class Visualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'main',
+            mode: 'machine',
             rendering: false,
             algorithms: [],
             currentAlgorithm: null,
@@ -44,8 +44,8 @@ export default class Visualizer extends Component {
         else if (this.state.mode === 'sorting') {
             renderObj = <SortingVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions} />;
         }
-        else if (this.state.mode === 'perceptron') {
-            renderObj = <PtronVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions}></PtronVisualizer>
+        else if (this.state.mode === 'machine') {
+            renderObj = <MachineLearningVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions}></MachineLearningVisualizer>
         }
         else {
             renderObj =
@@ -75,7 +75,7 @@ export default class Visualizer extends Component {
                         </a>
                         <a href='#' className='mainpage b' onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'perceptron' });
+                                this.setState({ mode: 'machine' });
                             }
                         }}>
                             <span></span>
@@ -103,8 +103,9 @@ export default class Visualizer extends Component {
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'pathfinding' });
-                                this.setState({ currentAlgorithm: null, pathClicked: true });
+                                this.setState({ mode: 'pathfinding', pathClicked: true });
+                                this.setState({ currentAlgorithm: null });
+                                this.state.setAlgorithm(-1);
                             }
                         }}
                         type="button" class="btn btn-dark navbtn" data-toggle={this.state.pathClicked ? "" : "modal"} data-target="#pathIntroModal"
@@ -114,6 +115,7 @@ export default class Visualizer extends Component {
                         onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'sorting', currentAlgorithm: null, sortingClicked: true });
+                                this.state.setAlgorithm(-1);
                             }
                         }}
                         type="button" class="btn btn-dark navbtn" data-toggle={this.state.sortingClicked ? "" : "modal"} data-target="#sortingIntroModal"
@@ -122,8 +124,9 @@ export default class Visualizer extends Component {
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'perceptron' });
+                                this.setState({ mode: 'machine' });
                                 this.setState({ currentAlgorithm: null });
+                                this.state.setAlgorithm(-1);
                             }
                         }}
                         type="button" class="btn btn-dark navbtn"

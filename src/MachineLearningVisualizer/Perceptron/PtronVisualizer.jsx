@@ -54,6 +54,7 @@ export default class PtronVisualizer extends Component {
     }
 
     startVisualizer() {
+        console.log(111);
         this.setState({ rendering: true });
         this.props.setVisualizerRendering(true);
         for (let i = 0; i < this.state.training.length - 1; i++) {
@@ -155,6 +156,7 @@ export default class PtronVisualizer extends Component {
                         {points.map((point, pointId) => {
                             return (
                                 <Circle
+                                    key={pointId}
                                     x={point.x + 0}
                                     y={point.y + 0}
                                     stroke={'black'}

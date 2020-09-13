@@ -126,7 +126,6 @@ function partition(piles, start, end, statesInOrder) {
     swap(piles, i + 1, end);
     const temp = { piles: piles.slice(), changing: [i + 1, end] };
     statesInOrder.push(temp);
-    statesInOrder.push(temp);
     return i + 1;
 }
 

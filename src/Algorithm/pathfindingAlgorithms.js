@@ -3,18 +3,204 @@ import { createPortal } from "react-dom";
 function dijkstra(grid, start, finish) {
     const visitedInOrder = [];
     start.distance = 0;
-    const univisited = allNodes(grid);
-    while (univisited.length) {
-        sortNodes(univisited);
-        const closest = univisited.shift();
+    const unvisited = allNodes(grid);
+    while (unvisited.length) {
+        sortNodes(unvisited);
+        const closest = unvisited.shift();
+        if (closest === finish) {
+            return visitedInOrder;
+        }
         if (closest.isWall) continue;
         if (closest.distance === Infinity) return visitedInOrder;
         closest.isVisited = true;
         visitedInOrder.push(closest);
-        if (closest === finish) return visitedInOrder;
+
         updateUnvisitedNeighbors(closest, grid);
     }
     return visitedInOrder;
+}
+
+function DFS(grid, start, finish) {
+    const visitedInOrder = [];
+    let unvisited = [];
+    unvisited.push(start);
+    let count = 0;
+    while (unvisited.length) {
+        const node = unvisited.pop();
+        if (node === finish) {
+            return visitedInOrder;
+        }
+        if (node.isWall) continue;
+        node.isVisited = true;
+        visitedInOrder.push(node);
+
+        unvisited = unvisited.concat(getUNeighbors(node, grid));
+        count++;
+    }
+
+    return visitedInOrder;
+}
+
+function BFS(grid, start, finish) {
+    /*
+    let nodes = [];
+    start.distance = 0;
+    nodes.push(start);
+    console.log(nodes, start);
+    const visitedInOrder = [];
+    let count = 0;
+    let visited = [];
+    while (nodes.length && count < 1000) {
+        const cur = nodes.shift();
+        const { row: row, col: col } = cur;
+        visited.push({ row: row, col: col });
+        if (cur.isFinish) return visitedInOrder;
+        if (cur.isWall) continue;
+
+        visitedInOrder.push(cur);
+        const neighbors = getUnvisitedNeighbors(cur, grid, visited);
+        console.log(visitedInOrder, neighbors.length, count);
+        console.log(visited.slice());
+        nodes = nodes.concat(neighbors);
+        count += 1;
+    }
+    return visitedInOrder;*/
+    const visitedInOrder = [];
+    let unvisited = [];
+    unvisited.push(start);
+    let count = 0;
+    while (unvisited.length) {
+        const node = unvisited.shift();
+        if (node === finish) {
+            return visitedInOrder;
+        }
+        if (node.isWall) continue;
+        node.isVisited = true;
+        visitedInOrder.push(node);
+
+        unvisited = unvisited.concat(getUNeighbors(node, grid));
+        count++;
+    }
+
+    return visitedInOrder;
+}
+
+function visitedTest(visited, ele) {
+    const { row: row, col: col } = ele;
+    for (let i = 0; i < visited.length; i++) {
+        const { row: r, col: c } = visited[i];
+        if (r === row && c == col) return true;
+
+    }
+    return false;
+}
+
+function getUNeighbors(node, grid) {
+    const neighbors = [];
+    const reN = [];
+    const { row, col } = node;
+    if (row > 0) neighbors.push(grid[row - 1][col]);
+    if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
+    if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
+    if (col > 0) neighbors.push(grid[row][col - 1]);
+
+    for (let index = 0; index < neighbors.length; index++) {
+        const neighbor = neighbors[index];
+        if (!neighbor.isVisited) {
+            neighbor.previousNode = node;
+            neighbor.isVisited = true;
+            reN.push(neighbor);
+        }
+    }
+    return reN;
+
+}
+
+function AStar(grid, start, finish) {
+    const visitedInOrder = [];
+    start.distance = 0;
+    start.heuristic = 0;
+    const unvisited = allNodes(grid);
+    while (unvisited.length) {
+        sortNodesStar(unvisited);
+        const cur = unvisited.shift();
+        if (cur === finish) {
+            return visitedInOrder;
+        }
+        if (cur.isWall) continue;
+        if (cur.distance + cur.heuristic === Infinity) return visitedInOrder;
+        cur.isVisited = true;
+        visitedInOrder.push(cur);
+
+        updateUnvisitedNeighborsStar(cur, grid, finish);
+    }
+    return visitedInOrder;
+}
+
+function updateUnvisitedNeighborsStar(cur, grid, finish) {
+    const neighbors = [];
+    const { row, col } = cur;
+    if (row > 0) neighbors.push(grid[row - 1][col]);
+    if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
+    if (col > 0) neighbors.push(grid[row][col - 1]);
+    if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
+    for (const neighbor of neighbors) {
+        if (!neighbor.isVisited) {
+            neighbor.distance = cur.distance + 1;
+            neighbor.heuristic = manhattanDistance(neighbor, finish);
+            neighbor.previousNode = cur;
+        }
+    }
+}
+
+function manhattanDistance(a, b) {
+    let { row: ar, col: ac } = a;
+    let { row: br, col: bc } = b;
+    return Math.abs(ar - br) + Math.abs(ac - bc);
+}
+
+function allNodes(grid) {
+    const re = [];
+    for (const row of grid) {
+        for (const node of row) {
+            re.push(node);
+        }
+    }
+    return re;
+}
+
+function sortNodesStar(nodes) {
+    nodes.sort((a, b) => (a.distance + a.heuristic) - (b.distance + b.heuristic));
+}
+
+
+function sortNodes(nodes) {
+    nodes.sort((a, b) => a.distance - b.distance);
+}
+
+function updateUnvisitedNeighbors(closest, grid) {
+    const neighbors = [];
+    const { row, col } = closest;
+    if (row > 0) neighbors.push(grid[row - 1][col]);
+    if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
+    if (col > 0) neighbors.push(grid[row][col - 1]);
+    if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
+    for (const neighbor of neighbors) {
+        if (!neighbor.isVisited) {
+            neighbor.distance = closest.distance + 1;
+            neighbor.previousNode = closest;
+        }
+    }
+}
+
+function getShortestPath(finish) {
+    const path = [];
+    let cur = finish;
+    while (cur !== null) {
+        path.unshift(cur);
+        cur = cur.previousNode;
+    }
+    return path;
 }
 
 function randomInt(min, max) {
@@ -49,7 +235,6 @@ function primMaze(grid) {
     let visited = [];
     let path = [{ row: sr, col: sc }];
     let count = 0;
-    console.log(sr, sc, path.slice());
     while (path.length > 0) {
         const index = randomSelect(path);
         const node = path[index];
@@ -156,7 +341,6 @@ function recursiveDivision(grid, width, height, xo, yo, count) {
     }
     let horizontal = randomInt(0, 1) == 0;
     let wallId = randomInt(horizontal ? yo : xo, horizontal ? height - 1 : width - 1);
-    console.log(horizontal, wallId, width, height);
     buildWall(grid, width, height, xo, yo, wallId, horizontal);
 
     let pathId = randomInt(!horizontal ? yo : xo, !horizontal ? height - 1 : width - 1);
@@ -171,58 +355,6 @@ function recursiveDivision(grid, width, height, xo, yo, count) {
         recursiveDivision(grid, wallId - 1, height, xo, yo, count + 1);
         recursiveDivision(grid, width, height, wallId, yo, count + 1);
     }
-}
-
-function DFS(grid, start, finsish) {
-
-}
-
-function BFS(grid, start, finish) {
-    return;
-}
-
-function AStar(grid, start, finish) {
-    return;
-}
-
-function allNodes(grid) {
-    const re = [];
-    for (const row of grid) {
-        for (const node of row) {
-            re.push(node);
-        }
-    }
-    return re;
-}
-
-function sortNodes(nodes) {
-    nodes.sort((a, b) => a.distance - b.distance);
-}
-
-function updateUnvisitedNeighbors(closest, grid) {
-    const neighbors = [];
-    const { row, col } = closest;
-    if (row > 0) neighbors.push(grid[row - 1][col]);
-    if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
-    if (col > 0) neighbors.push(grid[row][col - 1]);
-    if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
-
-    for (const neighbor of neighbors) {
-        if (!neighbor.isVisited) {
-            neighbor.distance = closest.distance + 1;
-            neighbor.previousNode = closest;
-        }
-    }
-}
-
-function getShortestPath(finish) {
-    const path = [];
-    let cur = finish;
-    while (cur !== null) {
-        path.unshift(cur);
-        cur = cur.previousNode;
-    }
-    return path;
 }
 
 export { dijkstra, BFS, DFS, AStar, getShortestPath, recursiveDivisionMaze, primMaze };
