@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PtronVisualizer from './Perceptron/PtronVisualizer';
 import background from '../MachineLearningVisualizer/background.jpg';
+import PongVisualizer from './PongVisualizer/PongVisualizer';
 
 export default class MachineLearningVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentAlgorithm: -1,
-            algorithms: ['Perceptron'],
+            algorithms: ['Perceptron', 'Approximate Q'],
             visualizeML: () => { },
             reset: () => { }
         };
@@ -34,10 +35,13 @@ export default class MachineLearningVisualizer extends Component {
         let renderObj;
         switch (this.state.currentAlgorithm) {
             case -1:
-                renderObj = <div></div>
+                renderObj = <div><h1 style={{ marginTop: "100px" }}>welcome</h1></div>
                 break;
             case 0:
                 renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></PtronVisualizer>
+                break;
+            case 1:
+                renderObj = <PongVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></PongVisualizer>
         }
         return (
             <div>{renderObj}</div>

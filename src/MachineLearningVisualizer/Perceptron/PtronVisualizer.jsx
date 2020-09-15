@@ -54,7 +54,6 @@ export default class PtronVisualizer extends Component {
     }
 
     startVisualizer() {
-        console.log(111);
         this.setState({ rendering: true });
         this.props.setVisualizerRendering(true);
         for (let i = 0; i < this.state.training.length - 1; i++) {
