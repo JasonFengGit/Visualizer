@@ -35,7 +35,7 @@ export default class MachineLearningVisualizer extends Component {
         let renderObj;
         switch (this.state.currentAlgorithm) {
             case -1:
-                renderObj = <div><h1 style={{ marginTop: "100px" }}>welcome</h1></div>
+                renderObj = <div style={{}}><h1 style={{ marginTop: "200px" }}>Welcome.</h1><br></br><h2>Select an algorithm to begin your journey!</h2></div>
                 break;
             case 0:
                 renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></PtronVisualizer>

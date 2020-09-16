@@ -12,7 +12,7 @@ export default class PongVisualizer extends Component {
             dots: [],
             rendering: true,
             width: 600,
-            height: 550,
+            height: 500,
             x: null,
             y: null,
             r: 15,
@@ -20,7 +20,7 @@ export default class PongVisualizer extends Component {
             vy: 0,
             ballSpeed: 3,
             panelx: 0,
-            panely: 530,
+            panely: 480,
             panelSpeed: 3,
             ballInitialized: false,
             framecount: 0,
@@ -114,6 +114,7 @@ export default class PongVisualizer extends Component {
             vy: ovy,
             score: 0,
             panelx: 0,
+            storedWeights: {},
             dots: [{ x: 100, y: 100 }, { x: 200, y: 100 }, { x: 300, y: 100 }, { x: 400, y: 100 }, { x: 500, y: 100 }],
             gameCount: this.state.gameCount + 1
         });
@@ -215,7 +216,9 @@ export default class PongVisualizer extends Component {
                 <h1 style={{ marginTop: "150px" }}>press go to start</h1>
             );
         }
-
+        let { "min_dis_to_dot": w1,
+            "dis_to_panel": w2,
+            "num_dots": w3 } = this.state.agent.weights;
         if (!this.notStarted && this.state.score !== 500 && !this.state.finished) {
             setTimeout(() => {
                 let agent = this.state.agent;
@@ -240,14 +243,22 @@ export default class PongVisualizer extends Component {
                 this.state.framecount += 1;
 
             }, 10 * this.state.framecount);
+            if (w1 !== NaN && !this.state.finished) {
+                this.state.storedWeights = {
+                    "min_dis_to_dot": w1,
+                    "dis_to_panel": w2,
+                    "num_dots": w3
+                };
+            }
         }
         const { x: x, y: y } = this.state;
         const dots = this.state.dots;
-        let { "min_dis_to_dot": w1,
-            "dis_to_panel": w2,
-            "num_dots": w3 } = this.state.agent.weights;
+
 
         if (this.state.finished) {
+            let { "min_dis_to_dot": w1,
+                "dis_to_panel": w2,
+                "num_dots": w3 } = this.state.storedWeights;
             if (this.state.rendering) {
                 this.props.setVisualizerRendering(false);
                 this.state.rendering = false;
@@ -288,7 +299,6 @@ export default class PongVisualizer extends Component {
         return (
             <>
                 <div>
-                    <button onClick={() => { this.state.notStarted = false }}></button>
                     <Stage
                         width={this.state.width}
                         height={this.state.height}
@@ -317,7 +327,7 @@ export default class PongVisualizer extends Component {
                                 stroke={'white'}
                                 fill={"white"}>
                             </Circle>
-                            <Rect x={this.state.panelx} y={530} width={100} height={10} stroke={'white'}
+                            <Rect x={this.state.panelx} y={this.state.panely} width={100} height={10} stroke={'white'}
                                 fill={"white"}></Rect>
                             <Text
                                 x={10}
@@ -327,6 +337,7 @@ export default class PongVisualizer extends Component {
                                 fill='white'
                                 fontSize={25}
                             ></Text>
+                            {/*
                             <Text
                                 x={480}
                                 y={15}
@@ -334,7 +345,7 @@ export default class PongVisualizer extends Component {
                                 fontFamily='Calibri'
                                 fill='white'
                                 fontSize={25}
-                            ></Text>
+                            ></Text>*/}
                         </Layer>
                     </Stage></div>
                 <div>
