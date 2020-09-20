@@ -1,0 +1,135 @@
+.game {
+    margin: 0px;
+    display: flex;
+}
+
+.board {
+    display: flex;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.col +.col {
+    margin-left: -15px;
+    margin-right: 15px;
+    padding: initial;
+}
+
+.piece {
+    padding: 0px;
+    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    border: 0px solid lightblue;
+    
+}
+
+.virtual-piece{
+    padding: 0px;
+    margin: 0px;
+    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    
+}
+
+.vp1{
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
+    background-color: #f0bb58;
+    opacity: 60%;
+    animation-name: virtualPiece1;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.vp2{
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
+    background-color: #00325F;
+    opacity: 60%;
+    animation-name: virtualPiece2;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes virtualPiece1{
+    0%{
+        background-color: white;
+    }
+    100%{
+        background-color: #f0bb58;
+    }
+}
+
+@keyframes virtualPiece2{
+    0%{
+        background-color: white;
+    }
+    100%{
+        background-color:  #00325F;
+    }
+}
+
+.p1 {
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
+    background-color: #f0bb58;
+}
+
+.null {
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
+    background-color: #d1d1d1;
+}
+
+.p2 {
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
+    background-color: #d1d1d1;
+    animation-name: p2animation;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.p2finished{
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
+    background-color: #00325F;
+}
+  
+@keyframes p2animation{
+    0%{
+        background-color: #d1d1d1;
+    }
+    100%{
+        background-color: #00325F;
+    }
+}

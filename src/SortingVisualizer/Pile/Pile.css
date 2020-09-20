@@ -48,14 +48,15 @@
 
 
 .value{
-  margin-top: 5px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;    
-  -o-user-select: none;
-  user-select: none;
-  animation-name: pileAppearAnimation;
-    animation-duration: 2s;
+    margin-top: 5px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;    
+    -o-user-select: none;
+    user-select: none;
+    font-family: monospace;
+    animation-name: pileAppearAnimation;
+    animation-duration: 0.5s;
     animation-timing-function: ease-out;
     animation-delay: 0;
     animation-direction: alternate;
@@ -65,10 +66,10 @@
 
 @keyframes pileAppearAnimation{
   0%{
-    margin-top:5px;
-    color: white;
+    margin-top:4px;
+    font-size: 0px;
   }
   100%{
-    margin-top:5px;
+    margin-top:4px;
   }
 }
