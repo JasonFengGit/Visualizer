@@ -1,0 +1,18 @@
+// See https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md 
+// for the documentation about the Iceworks debug 
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Iceworks Debug",
+      "url": "http://localhost:3333",
+      "urlFilter": "http://localhost:3333/**/*",
+      "webRoot": "${workspaceFolder}",
+      "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-user-data",
+      "preLaunchTask": "Iceworks Start Background Tasks",
+      "postDebugTask": "Iceworks Stop Background Tasks"
+    }
+  ]
+}

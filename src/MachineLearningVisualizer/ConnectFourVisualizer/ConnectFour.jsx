@@ -200,7 +200,8 @@ function checkWinner(board) {
 
 class MinimaxAgent {
     constructor() {
-        this.scores = { "p1": -1000000, "tie": 0, "p2": -1000000 }
+        this.scores = { "p1": -1000000, "tie": 0, "p2": -1000000 };
+        this.cache = {};
     }
 
     getActions(board) {
@@ -220,10 +221,9 @@ class MinimaxAgent {
         board = board.map((a) => a.slice());
         for (const action of actions) {
             const boardCopy = board.map((a) => a.slice());
-            this.tryMove(action, boardCopy, "p2");
-            let val = this.minimax(boardCopy, true, -Infinity, Infinity, 5);
+            let val = this.minimax(this.tryMove(action, boardCopy, "p2"), false, -Infinity, Infinity, 6);
             //console.log(val);
-            console.log(action, val, boardCopy);
+            console.log(action, val, boardCopy, this.getScore(boardCopy));
             if (maxVal < val) {
                 maxVal = val;
                 maxValAction = action;
@@ -237,6 +237,7 @@ class MinimaxAgent {
         let newCol = board[colId].reverse();
         newCol[newCol.indexOf(null)] = val;
         newCol.reverse();
+        return board;
     }
 
     count(four, tar) {
@@ -255,32 +256,24 @@ class MinimaxAgent {
         const count1 = this.count(four, "p1");
         const countN = this.count(four, null);
         const count2 = this.count(four, "p2");
-        /*
-        if (count2 === 4) {
-            score += 20;
+        
+        if (count1 === 2 && countN === 2){
+            return -10;
         }
-        else if (count2 === 3 && countN === 1) {
-            score += 10;
+        if (count2 === 2 && countN === 2){
+            return 10;
         }
-        else if (count2 === 2 && countN === 2) {
-            score += 5;
+        if (count1 === 3 && countN === 1){
+            return -100;
         }
-
-        if (count1 === 3 && countN === 1) {
-            score -= 200;
-        }
-        else if (count1 === 2 && countN === 2) {
-            score -= 100;
-        }
-        */
-        if (count1 > 3) {
-            console.log(four);
+        if (count2 === 3 && countN === 1){
+            return 100;
         }
         if (count1 === 4) {
-            return -1000;
+            return -100000;
         }
-        if (count2 === 4) {
-            return 1000;
+        if (count2 === 4){
+            return 10000;
         }
         return score;
     }
@@ -314,17 +307,32 @@ class MinimaxAgent {
                 score += this.scoreFour(board[c][r], board[c - 1][r + 1], board[c - 2][r + 2], board[c - 3][r + 3]);
             }
         }
-
         return score;
     }
-
+    toHash(board){
+        let re = "";
+        for(let c = 0; c<7;c++){
+            for(let r = 1; r<7;r++){
+                if(board[c][r])
+                    re += board[c][r];
+                else
+                    re += "n";
+            }
+        }
+        return re;
+    }
     minimax(board, isMax, alpha, beta, depth) {
         //console.log(1);
+        if(this.toHash(board) in this.cache){
+            return this.cache[this.toHash(board)];
+        }
         board = board.map((a) => a.slice());
 
         if (checkWinner(board) || depth === 0) {
-            //console.log(board[3]);
-            return this.getScore(board);
+            let score = this.getScore(board);
+            //console.log(this.toHash(board), score);
+            this.cache[this.toHash(board)] = score;
+            return score;
         }
 
         let actions = this.getActions(board);
@@ -333,8 +341,7 @@ class MinimaxAgent {
             let val = -Infinity;
             for (const action of actions) {
                 const boardCopy = board.map((a) => a.slice());
-                this.tryMove(action, boardCopy, "p2");
-                val = Math.max(val, this.minimax(boardCopy, false, alpha, beta, depth - 1));
+                val = Math.max(val, this.minimax(this.tryMove(action, boardCopy, "p2"), false, alpha, beta, depth-1));
 
                 if (val >= beta) {
                     //console.log("maxb: " + val);
@@ -349,26 +356,14 @@ class MinimaxAgent {
             let val = Infinity;
             for (const action of actions) {
                 const boardCopy = board.map((a) => a.slice());
-                this.tryMove(action, boardCopy, "p1");
-                val = Math.min(val, this.minimax(boardCopy, true, alpha, beta, depth - 1));
-                //console.log(val);
+                val = Math.min(val, this.minimax(this.tryMove(action, boardCopy, "p1"), true, alpha, beta, depth - 1));
+                //console.log(action, val);
                 if (val <= alpha) {
-                    //console.log("mina: " + val);
                     return val;
                 }
                 beta = Math.min(beta, val);
             }
-            //console.log("min: " + val);
             return val;
         }
     }
-}
-
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-
-function randomSelect(actions) {
-    return randomInt(0, actions.length - 1);
 }
