@@ -8,7 +8,7 @@ export default class MachineLearningVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentAlgorithm: 2,
+            currentAlgorithm: -1,
             algorithms: ['Perceptron', 'Approximate Q', 'Minimax'],
             visualizeML: () => { },
             reset: () => { }
