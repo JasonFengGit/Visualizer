@@ -20,6 +20,7 @@ export default class MachineLearningVisualizer extends Component {
         this.props.getFunctions(() => { this.state.visualizeML() }, () => { this.state.reset() }, this.setAlgorithm, this.state.algorithms);
     }
     getMLFunctions(run, reset) {
+        console.log(run, reset);
         this.state.visualizeML = () => {
             run()
         };

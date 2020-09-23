@@ -5,8 +5,8 @@ function Piece(props) {
     return (
         <div className={props.id === 0 ? "virtual-piece" : "piece"}>
             <div
-                className={(props.id === 0 ? "v" : "") + `${props.val}` + (props.finished && props.val === "p2" ? "finished" : "")}
-                style={props.id === 0 || props.val == null ? {} : { transition: "0.5s" }}
+                className={(props.id === 0 ? "v" : "") + `${props.val}` + (props.finished && props.val !== null ? "finished" : "")}
+
             ></div>
         </div>
     );
@@ -30,15 +30,58 @@ export default class ConnectFour extends Component {
         this.state = {
             currentPlayer: 0, // player 1 goes first
             board: new Array(7).fill(new Array(7).fill(null)),
+            lastBoards: [],
             colors: ["p1", "p2"],
             winner: null,
-            minimaxAgent: new MinimaxAgent(),
+            depth: 3,
+            minimaxAgent: new MinimaxAgent(new Array(7).fill(new Array(7).fill(null)), 3),
         };
+        this.reset = this.reset.bind(this);
+        this.props.getFunctions(() => { }, this.reset);
+    }
+
+    reset() {
+        console.log("reset");
+        this.setState({
+            currentPlayer: 0, // player 1 goes first
+            board: new Array(7).fill(new Array(7).fill(null)),
+            colors: ["p1", "p2"],
+            winner: null,
+        });
+        console.log(this.state);
+    }
+
+    undo() {
+        console.log(this.state);
+        if (this.state.lastBoards.length) {
+            this.setState({
+                board: this.state.lastBoards.pop(),
+            });
+
+        }
+    }
+
+    setDepth(d){
+        this.setState({depth: d});
+        this.state.minimaxAgent.setDepth(d);
     }
 
     handleClick(colId) {
         if (!this.state.winner) {
+            this.state.lastBoards.push(this.state.board.map((a) => a.slice()));
             this.move(colId);
+        }
+    }
+
+    AITakeMove() {
+        if (checkWinner(this.state.board) === null && this.state.currentPlayer == 1) {
+            //console.log(1);
+            const boardCopy = this.state.board.map((a) => a.slice());
+            const action = this.state.minimaxAgent.getAction(boardCopy);
+
+            this.move(action);
+            //console.log(this.state.aiThinking);
+
         }
     }
 
@@ -93,14 +136,7 @@ export default class ConnectFour extends Component {
                 board: boardCopy,
             })
         }
-        else {
-            if (this.state.winner === null && this.state.currentPlayer == 1) {
-                const boardCopy = this.state.board.map((a) => a.slice());
-                const action = this.state.minimaxAgent.getAction(boardCopy);
-
-                this.move(action);
-            }
-        }
+        this.AITakeMove();
     }
 
     render() {
@@ -123,8 +159,27 @@ export default class ConnectFour extends Component {
                                 <div className="col"></div>
                                 {cols}</>
                         </div>
+                        <button
+                        style={{ position: "absolute", marginTop: "460px", marginLeft: "150px", height: "30px", width: "100px" }}
+                        onClick={() => this.undo()}
+                        type="button"
+                        class="btn btn-outline-dark">
+                        <p style={{ "margin-top": "-5px" }}>undo</p>
+                    </button>
+                    <div class={"dropdown"}>
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ position: "absolute", marginTop: "460px", marginLeft: "-200px", height: "30px", width: "150px" }}>
+                            <p style={{ "margin-top": "-5px" }}>{`Depth: ${this.state.depth}`}</p>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(3)}><p style={{ "margin-top": "-5px" }}>{`Depth: 3`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(4)}><p style={{ "margin-top": "-5px" }}>{`Depth: 4`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(5)}><p style={{ "margin-top": "-5px" }}>{`Depth: 5`}</p></button>
+                            </li>
+                        </div>
                     </div>
-                    <h1 style={{ marginTop: "-170px" }}>{`Winner: ${this.state.winner}`}</h1>
+                    </div>
+                    <h1 style={{ position: "relative", marginTop: "-170px" }}>{this.state.winner == "tie" ? "Tie" : `Winner: ${this.state.winner === "p1" ? "You" : "AI"}`}</h1>
                 </div>
 
             );
@@ -146,6 +201,25 @@ export default class ConnectFour extends Component {
                 <div className="game">
                     <div className="board">
                         {cols}
+                    </div>
+                    <button
+                        style={{ position: "absolute", marginTop: "460px", marginLeft: "150px", height: "30px", width: "100px" }}
+                        onClick={() => this.undo()}
+                        type="button"
+                        class="btn btn-outline-dark">
+                        <p style={{ "margin-top": "-5px" }}>undo</p>
+                    </button>
+                    <div class={"dropdown"}>
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ position: "absolute", marginTop: "460px", marginLeft: "-200px", height: "30px", width: "150px" }}>
+                            <p style={{ "margin-top": "-5px" }}>{`Depth: ${this.state.depth}`}</p>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(3)}><p style={{ "margin-top": "-5px" }}>{`Depth: 3`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(4)}><p style={{ "margin-top": "-5px" }}>{`Depth: 4`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(5)}><p style={{ "margin-top": "-5px" }}>{`Depth: 5`}</p></button>
+                            </li>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -199,9 +273,11 @@ function checkWinner(board) {
 }
 
 class MinimaxAgent {
-    constructor() {
+    constructor(board, depth) {
         this.scores = { "p1": -1000000, "tie": 0, "p2": -1000000 };
         this.cache = {};
+        this.depth = depth;
+        this.getAction(board);
     }
 
     getActions(board) {
@@ -214,6 +290,10 @@ class MinimaxAgent {
         return actions;
     }
 
+    setDepth(d){
+        this.depth = d;
+    }
+
     getAction(board) {
         let actions = this.getActions(board);
         let maxVal = -Infinity;
@@ -221,9 +301,10 @@ class MinimaxAgent {
         board = board.map((a) => a.slice());
         for (const action of actions) {
             const boardCopy = board.map((a) => a.slice());
-            let val = this.minimax(this.tryMove(action, boardCopy, "p2"), false, -Infinity, Infinity, 6);
+            console.log(this.depth);
+            let val = this.minimax(this.tryMove(action, boardCopy, "p2"), false, -Infinity, Infinity, this.depth);
             //console.log(val);
-            console.log(action, val, boardCopy, this.getScore(boardCopy));
+            //console.log(action, val, boardCopy, this.getScore(boardCopy));
             if (maxVal < val) {
                 maxVal = val;
                 maxValAction = action;
@@ -256,26 +337,23 @@ class MinimaxAgent {
         const count1 = this.count(four, "p1");
         const countN = this.count(four, null);
         const count2 = this.count(four, "p2");
-        
-        if (count1 === 2 && countN === 2){
-            return -10;
+
+        if (count1 === 2 && countN === 2) {
+            return -500;
         }
-        if (count2 === 2 && countN === 2){
-            return 10;
+        if (count1 === 3 && countN === 1) {
+            return -1000;
         }
-        if (count1 === 3 && countN === 1){
-            return -100;
-        }
-        if (count2 === 3 && countN === 1){
+        if (count2 === 3 && countN === 1) {
             return 100;
         }
         if (count1 === 4) {
             return -100000;
         }
-        if (count2 === 4){
-            return 10000;
+        if (count2 === 4) {
+            return 90000;
         }
-        return score;
+        return count2;
     }
 
     getScore(board) {
@@ -309,11 +387,11 @@ class MinimaxAgent {
         }
         return score;
     }
-    toHash(board){
+    toHash(board) {
         let re = "";
-        for(let c = 0; c<7;c++){
-            for(let r = 1; r<7;r++){
-                if(board[c][r])
+        for (let c = 0; c < 7; c++) {
+            for (let r = 1; r < 7; r++) {
+                if (board[c][r])
                     re += board[c][r];
                 else
                     re += "n";
@@ -323,7 +401,7 @@ class MinimaxAgent {
     }
     minimax(board, isMax, alpha, beta, depth) {
         //console.log(1);
-        if(this.toHash(board) in this.cache){
+        if (this.toHash(board) in this.cache) {
             return this.cache[this.toHash(board)];
         }
         board = board.map((a) => a.slice());
@@ -341,7 +419,7 @@ class MinimaxAgent {
             let val = -Infinity;
             for (const action of actions) {
                 const boardCopy = board.map((a) => a.slice());
-                val = Math.max(val, this.minimax(this.tryMove(action, boardCopy, "p2"), false, alpha, beta, depth-1));
+                val = Math.max(val, this.minimax(this.tryMove(action, boardCopy, "p2"), false, alpha, beta, depth - 1));
 
                 if (val >= beta) {
                     //console.log("maxb: " + val);

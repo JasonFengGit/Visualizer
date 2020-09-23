@@ -138,7 +138,7 @@ export default class Visualizer extends Component {
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()} data-toggle={this.state.currentAlgorithm === null ? "modal" : ""} data-target="#setAlgoModal">Go!</button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()} data-toggle={this.state.currentAlgorithm === null ? "modal" : ""} data-target="#setAlgoModal" disabled={this.state.mode === "machine" && this.state.currentAlgorithm === "Minimax"}>Go!</button>
                                 <button type="button" class="btn btn-light navbtn" onClick={() => this.state.resetFunction()}>Reset</button>
                             </li>
                         </div>

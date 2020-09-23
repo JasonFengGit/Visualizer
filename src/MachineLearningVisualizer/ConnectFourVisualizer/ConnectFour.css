@@ -90,6 +90,31 @@
     width: 47px;
     height: 47px;
     border-radius: 10px;
+    background-color: #d1d1d1;
+    animation-name: p1animation;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes p1animation{
+    0%{
+        background-color: #d1d1d1;
+    }
+    100%{
+        background-color: #f0bb58;
+    }
+}
+
+.p1finished {
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 10px;
     background-color: #f0bb58;
 }
 
@@ -108,7 +133,7 @@
     border-radius: 10px;
     background-color: #d1d1d1;
     animation-name: p2animation;
-    animation-duration: 0.8s;
+    animation-duration: 0.5s;
     animation-timing-function: ease-out;
     animation-delay: 0s;
     animation-direction: alternate;
