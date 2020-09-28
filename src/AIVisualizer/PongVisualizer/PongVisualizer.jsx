@@ -213,7 +213,49 @@ export default class PongVisualizer extends Component {
     render() {
         if (this.state.notStarted) {
             return (
-                <h1 style={{ marginTop: "150px" }}>press go to start</h1>
+                <Stage
+                        width={this.state.width}
+                        height={this.state.height}
+                        className='pong stage'
+                        id='pong stage'
+                    >
+                        <Layer>
+                            <Rect width={this.state.width} height={this.state.height} stroke="black" fill="black"></Rect>
+                            <Text
+                                x={200}
+                                y={200}
+                                text={`Press`}
+                                fontFamily='Calibri'
+                                fill='white'
+                                fontSize={30}
+                            ></Text>
+                            <Text
+                                x={275}
+                                y={200}
+                                text={`go`}
+                                fontFamily='Calibri'
+                                fill={this.state.goMouseEnter ? 'rgb(142, 228, 213)':'white'}
+                                fontSize={30}
+                                onClick={
+                                    ()=>{this.setState({notStarted:false})}
+                                }
+                                onMouseEnter={
+                                    ()=>{this.setState({goMouseEnter:true})}
+                                }
+                                onMouseLeave={
+                                    ()=>{this.setState({goMouseEnter:false})}
+                                }
+                            ></Text>
+                            <Text
+                                x={315}
+                                y={200}
+                                text={`to start.`}
+                                fontFamily='Calibri'
+                                fill='white'
+                                fontSize={30}
+                            ></Text>
+                        </Layer>
+                    </Stage>
             );
         }
         let { "min_dis_to_dot": w1,

@@ -1,4 +1,91 @@
-h1{
-    color: lightblue;
-    margin-top: 200px;
+.textcontainer{
+    padding-top: 20em;
+    display: flex;
+    justify-content: center;
+}
+  
+.typewriter h1 {
+    color: rgb(0, 0, 0);
+    font-family: monospace;
+    overflow: hidden; 
+    border-right: .15em solid; 
+    white-space: nowrap; 
+    margin: 0 auto; 
+    letter-spacing: .15em;
+    animation: 
+        typing 3.5s steps(30, end),
+        blink-caret .5s step-end infinite;
+}
+  
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: rgb(0, 0, 0) }
+}
+/* Stars 
+------------------------------------- */
+
+#space, .stars {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.stars {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, rgb(0, 0, 0), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, rgb(0, 0, 0), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, rgb(0, 0, 0), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, rgb(2, 2, 2), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 130px 80px, rgb(2, 2, 2), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px,rgb(2, 2, 2), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: zoom 5s infinite;
+  opacity: 0;
+}
+
+.stars:nth-child(1) {
+  background-position: 50% 50%;
+  animation-delay: -5s;
+}
+.stars:nth-child(2) {
+  background-position: 20% 60%;
+  animation-delay: -4s;
+}
+.stars:nth-child(3) {
+  background-position: -20% -30%;
+  animation-delay: -3s;
+}
+.stars:nth-child(4) {
+  background-position: 40% -80%;
+  animation-delay: -2s;
+}
+.stars:nth-child(5) {
+  background-position: -20% 30%;
+  animation-delay: -1s;
+}
+
+@keyframes zoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+    animation-timing-function: ease-in;
+  } 
+  85% {
+    opacity: 1;
+    transform: scale(2.8);
+    animation-timing-function: linear;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.5);
+  }
 }

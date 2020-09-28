@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PtronVisualizer from './Perceptron/PtronVisualizer';
 import PongVisualizer from './PongVisualizer/PongVisualizer';
 import ConnectFour from './ConnectFourVisualizer/ConnectFour';
+import './AIVisualizer.css';
+import TextLoop from 'react-text-loop';
 
 export default class AIVisualizer extends Component {
     constructor(props) {
@@ -36,7 +38,20 @@ export default class AIVisualizer extends Component {
         let renderObj;
         switch (this.state.currentAlgorithm) {
             case -1:
-                renderObj = <h1>1111</h1>
+                renderObj = <>
+                <div class="textcontainer">
+                    <div class="typewriter"><h1>Welcome to the Future.</h1></div>
+                   
+                </div>
+                
+                <div id="space">
+                  <div class="stars"></div>
+                  <div class="stars"></div>
+                  <div class="stars"></div>
+                  <div class="stars"></div>
+                  <div class="stars"></div>
+                </div>
+                </>
                 break;
             case 0:
                 renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></PtronVisualizer>

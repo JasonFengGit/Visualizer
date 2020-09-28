@@ -55,7 +55,7 @@ export default class PtronVisualizer extends Component {
 
     startVisualizer() {
         this.setState({ rendering: true });
-        this.props.setVisualizerRendering(true);
+        //this.props.setVisualizerRendering(true);
         for (let i = 0; i < this.state.training.length - 1; i++) {
             setTimeout(
                 () => {
@@ -67,7 +67,7 @@ export default class PtronVisualizer extends Component {
         }
         setTimeout(() => {
             this.setState({ rendering: false });
-            this.props.setVisualizerRendering(false);
+            //this.props.setVisualizerRendering(false);
         }, 25 * this.state.training.length)
 
     }
