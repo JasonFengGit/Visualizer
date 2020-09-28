@@ -12,6 +12,7 @@
     "js-shortid": "^0.1.1",
     "konva": "^7.0.7",
     "mocha": "^8.1.3",
+    "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

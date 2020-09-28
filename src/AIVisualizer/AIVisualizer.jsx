@@ -3,7 +3,6 @@ import PtronVisualizer from './Perceptron/PtronVisualizer';
 import PongVisualizer from './PongVisualizer/PongVisualizer';
 import ConnectFour from './ConnectFourVisualizer/ConnectFour';
 
-
 export default class AIVisualizer extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +36,7 @@ export default class AIVisualizer extends Component {
         let renderObj;
         switch (this.state.currentAlgorithm) {
             case -1:
-                renderObj = <div style={{}}><h1 style={{ marginTop: "200px" }}>Welcome.</h1><br></br><h2>Select an algorithm to begin your journey!</h2></div>
+                renderObj = <h1>1111</h1>
                 break;
             case 0:
                 renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></PtronVisualizer>
