@@ -17,7 +17,7 @@ You may visit the page at <a href="https://jasonfenggit.github.io/Visualizer/">j
   - Selection Sort
   - Merge Sort
   - Quick Sort
-- Machine-Learning Category
+- AI Category
   - Simple Perceptron
   - Approximate Q Learning
   - Minimax(Alpha–beta pruning)
