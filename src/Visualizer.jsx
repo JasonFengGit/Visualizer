@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Text } from 'react';
+import TextLoop from "react-text-loop";
 import PathFindingVisualizer from './PathFindingVisualizer/PathFindingVisualizer';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
 import './Visualizer.css'
-import MachineLearningVisualizer from './MachineLearningVisualizer/MachineLearningVisualizer';
+import AIVisualizer from './AIVisualizer/AIVisualizer';
 
 export default class Visualizer extends Component {
     constructor(props) {
@@ -44,17 +45,28 @@ export default class Visualizer extends Component {
         else if (this.state.mode === 'sorting') {
             renderObj = <SortingVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions} />;
         }
-        else if (this.state.mode === 'machine') {
-            renderObj = <MachineLearningVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions}></MachineLearningVisualizer>
+        else if (this.state.mode === 'ai') {
+            renderObj = <AIVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions}></AIVisualizer>
         }
         else {
             renderObj =
                 <div class="welbotron">
+                    
                     <div class="container welc">
+                        
                         <h1 class='welcome'>Hello, algorithms.
-                            <p class='quote'>"An algorithm must be seen to be believed."</p>
+                            <p class="quote">
+                                <TextLoop interval={3800} springConfig={{ stiffness: 200}} adjustingSpeed={300} >
+                                        <p class="quoteText">"An algorithm must be seen to be believed."</p>
+                                        <p class="quoteText">"Algorithms are central objects of study in Computer Science."</p>
+                                        <p class="quoteText">"Algorithms are apprehensible magics."</p>
+                                        <p class="quoteText">"An algorithm is like a recipe."</p>
+                                </TextLoop>
+                            </p>
+                            
                             <p class="lead">This website might help you understand algorithms better by visualizing them.</p>
                             <p class="secondline lead">Click on one of the categories below to visualize algorithms.</p>
+
                         </h1>
                         <a href='#' className='mainpage b' onClick={() => {
                             if (!this.state.rendering) {
@@ -75,11 +87,11 @@ export default class Visualizer extends Component {
                         </a>
                         <a href='#' className='mainpage b' onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'machine' });
+                                this.setState({ mode: 'ai' });
                             }
                         }}>
                             <span></span>
-                            Machine-Learning
+                            ARTIFICIAL-INTELLIGENCE
                         </a>
                     </div>
                 </div>
@@ -88,9 +100,9 @@ export default class Visualizer extends Component {
         if (this.state.mode === 'main') invisibleOrNot = ' invisible';
         let algorithms = this.state.algorithms;
         return (
-            <>
-                <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-dark">
-
+            <>  
+                    
+                    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-dark">
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
@@ -124,21 +136,21 @@ export default class Visualizer extends Component {
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'machine' });
+                                this.setState({ mode: 'ai' });
                                 this.setState({ currentAlgorithm: null });
                                 this.state.setAlgorithm(-1);
                             }
                         }}
                         type="button" class="btn btn-dark navbtn"
                         disabled={this.state.rendering}
-                    >MachineLearning</button>
+                    >AI</button>
                     <div class={"dropdown" + invisibleOrNot}>
                         <button class="btn btn-light dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()} data-toggle={this.state.currentAlgorithm === null ? "modal" : ""} data-target="#setAlgoModal" disabled={this.state.mode === "machine" && this.state.currentAlgorithm === "Minimax"}>Go!</button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()} data-toggle={this.state.currentAlgorithm === null ? "modal" : ""} data-target="#setAlgoModal" disabled={this.state.mode === "ai" && this.state.currentAlgorithm === "Minimax"}>Go!</button>
                                 <button type="button" class="btn btn-light navbtn" onClick={() => this.state.resetFunction()}>Reset</button>
                             </li>
                         </div>
@@ -241,9 +253,10 @@ export default class Visualizer extends Component {
                         </div>
 
                     </div>
-                </div>
+                </div >
                 <div>
-                    <div>{renderObj}</div>
+                    <h1 x={"300px"} y={"300px"}>111</h1>
+                    {renderObj}
                 </div>
             </>
         )

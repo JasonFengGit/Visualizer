@@ -4,30 +4,30 @@ import PongVisualizer from './PongVisualizer/PongVisualizer';
 import ConnectFour from './ConnectFourVisualizer/ConnectFour';
 
 
-export default class MachineLearningVisualizer extends Component {
+export default class AIVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentAlgorithm: -1,
             algorithms: ['Perceptron', 'Approximate Q', 'Minimax'],
-            visualizeML: () => { },
+            visualizeAI: () => { },
             reset: () => { }
         };
         this.state.reset = this.state.reset.bind(this.state);
-        this.state.visualizeML = this.state.visualizeML.bind(this.state);
-        this.getMLFunctions = this.getMLFunctions.bind(this);
+        this.state.visualizeAI = this.state.visualizeAI.bind(this.state);
+        this.getAIFunctions = this.getAIFunctions.bind(this);
         this.setAlgorithm = this.setAlgorithm.bind(this);
-        this.props.getFunctions(() => { this.state.visualizeML() }, () => { this.state.reset() }, this.setAlgorithm, this.state.algorithms);
+        this.props.getFunctions(() => { this.state.visualizeAI() }, () => { this.state.reset() }, this.setAlgorithm, this.state.algorithms);
     }
-    getMLFunctions(run, reset) {
+    getAIFunctions(run, reset) {
         console.log(run, reset);
-        this.state.visualizeML = () => {
+        this.state.visualizeAI = () => {
             run()
         };
         this.state.reset = () => {
             reset();
         }
-        this.setState({ visualizeML: run });
+        this.setState({ visualizeAI: run });
     }
     setAlgorithm(algoId) {
         this.setState({ currentAlgorithm: algoId });
@@ -40,13 +40,13 @@ export default class MachineLearningVisualizer extends Component {
                 renderObj = <div style={{}}><h1 style={{ marginTop: "200px" }}>Welcome.</h1><br></br><h2>Select an algorithm to begin your journey!</h2></div>
                 break;
             case 0:
-                renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></PtronVisualizer>
+                renderObj = <PtronVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></PtronVisualizer>
                 break;
             case 1:
-                renderObj = <PongVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></PongVisualizer>
+                renderObj = <PongVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></PongVisualizer>
                 break;
             case 2:
-                renderObj = <ConnectFour setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getMLFunctions}></ConnectFour>
+                renderObj = <ConnectFour setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></ConnectFour>
                 break;
         }
         return (

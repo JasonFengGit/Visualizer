@@ -20,6 +20,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-text-loop": "^2.3.0",
     "wingcss": "^1.0.0-beta"
   },
   "scripts": {
