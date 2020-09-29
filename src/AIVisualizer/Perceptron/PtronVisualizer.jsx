@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Rect, Line, Konva, Circle, Text } from 'react-konva';
+import Konva from 'react-konva';
+import { Stage, Layer, Rect, Line, Circle, Text } from 'react-konva';
+import { Perceptron, random } from './Perceptron';
 import './PtronVisualizer.css';
+
 export default class PtronVisualizer extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +19,7 @@ export default class PtronVisualizer extends Component {
             xOff: 50,
             yOff: 100,
             M: 0.4,
-            B: 0.3
+            B: 0.3,
         }
         this.resetVisualizer = this.resetVisualizer.bind(this);
         this.startVisualizer = this.startVisualizer.bind(this);
@@ -32,7 +35,7 @@ export default class PtronVisualizer extends Component {
     }
 
     initialize() {
-        this.state.ptron = new Perceptron(3, 0.005);
+        this.state.ptron = new Perceptron(3, 0.006);
         for (let i = 0; i < this.state.training.length; i++) {
             let x = random(this.state.min, this.state.max);
             let y = random(this.state.min, this.state.max);
@@ -55,19 +58,16 @@ export default class PtronVisualizer extends Component {
 
     startVisualizer() {
         this.setState({ rendering: true });
-        //this.props.setVisualizerRendering(true);
         for (let i = 0; i < this.state.training.length - 1; i++) {
             setTimeout(
                 () => {
                     this.setState({ count: i });
                     this.state.count = i;
-                    //console.log(this.state.count)
                 }
                 , 25 * i);
         }
         setTimeout(() => {
             this.setState({ rendering: false });
-            //this.props.setVisualizerRendering(false);
         }, 25 * this.state.training.length)
 
     }
@@ -94,18 +94,15 @@ export default class PtronVisualizer extends Component {
         yy1 = this.map(yy1, min, max, this.state.height, 0);
         xx2 = this.map(xx2, min, max, 0, this.state.width);
         yy2 = this.map(yy2, min, max, this.state.height, 0);
-        //console.log(this.state.training[this.state.count]);
         ptron.train(this.state.training[this.state.count].input, this.state.training[this.state.count].output);
-        // y = 0.3 x + 0.4
-        // y = -w0x - w2 / w1 
-        //console.log(weights[2], weights[1], weights[0]);
+
         let points = []
 
         for (let i = 0; i < this.state.count; i++) {
             let guess = ptron.feedforward(this.state.training[i].input);
             let x = this.map(this.state.training[i].input[0], min, max, 0, this.state.width);
             let y = this.map(this.state.training[i].input[1], min, max, this.state.height, 0);
-            points.push({ x: x, y: y, fill: guess < 0 });
+            if(i%4>0) points.push({ x: x, y: y, fill: guess < 0 });
         }
         let xOff = this.state.xOff;
         let yOff = this.state.yOff;
@@ -113,31 +110,95 @@ export default class PtronVisualizer extends Component {
         let aB = -weights[2] / weights[1];
         let eM = aM - this.state.M;
         let eB = aB - this.state.B;
-        return (
+        let textComponet;
+        if (this.state.count != 0) {
+            textComponet = <><Text
+                x={550}
+                y={50}
+                text='Function Form: Y = M * X + B'
+                fontFamily='Calibri'
+                fill='black'
+                fontSize={25}
+            ></Text>
+                <Text
+                    x={550}
+                    y={80}
+                    text={`Original Function: M = ${this.state.M} B = ${this.state.B}`}
+                    fontFamily='Calibri'
+                    fill='black'
+                    fontSize={25}
+                ></Text>
+                <Text
+                    x={550}
+                    y={135}
+                    text={`Approximation:\nM = ${aM}\nB = ${aB}`}
+                    fontFamily='Calibri'
+                    fill='black'
+                    fontSize={25}
+                ></Text>
+                <Text
+                    x={550}
+                    y={240}
+                    text={`Error:\nM: ${eM}\nB:${eB}`}
+                    fontFamily='Calibri'
+                    fill='red'
+                    fontSize={25}
+                ></Text></>
+        }
+        else {
+            textComponet = <><Text
+                x={550}
+                y={50}
+                text=''
+                fontFamily='Calibri'
+                fill='black'
+                fontSize={25}
+            ></Text>
+                <Text
+                    x={550}
+                    y={80}
+                    text={`Original Function: M = ${this.state.M} B = ${this.state.B}`}
+                    fontFamily='Calibri'
+                    fill='black'
+                    fontSize={25}
+                ></Text>
+                <Text
+                    x={550}
+                    y={135}
+                    text={`Approximation:\nM = ${aM}\nB = ${aB}`}
+                    fontFamily='Calibri'
+                    fill='black'
+                    fontSize={25}
+                ></Text>
+                <Text
+                    x={550}
+                    y={240}
+                    text={`Error:\nM: ${eM}\nB:${eB}`}
+                    fontFamily='Calibri'
+                    fill='red'
+                    fontSize={25}
+                ></Text></>
+        }
+        let circles = points.map((point, pointId) => {
+            return (<Circle
+                key={pointId}
+                x={point.x + 0}
+                y={point.y + 0}
+                stroke={'black'}
+                radius={3}
+                opacity={0.7}
+                fill={point.fill ? 'black' : 'white'}
+            ></Circle>)}
+        )
+        this.state.all = (
             <>
-                {/*
-                <button
-                    onClick={this.startVisualizer}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}
-                >
-                    Apporximate
-                </button >
-                <button
-                    onClick={this.resetVisualizer}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}
-                >
-                    Reset
-                </button>*/}
-
                 <Stage
-                    width={this.state.width * 2}
-                    height={this.state.height + 1}
+                    width={500 * 2}
+                    height={500 + 1}
                     className='stage'
                     id='stage'
                 >
-                    <Layer>
+                    <Layer name="layer" ref={ref => (this.state.layer = ref)}>
                         <Line points={[0, 0, 500, 0]} stroke={'black'} ></Line>
                         <Line points={[0, 0, 0, 0 + 500]} stroke={'black'}></Line>
                         <Line points={[0, 0 + 500, 500 + 0, 0 + 500]} stroke={'black'} ></Line>
@@ -152,112 +213,13 @@ export default class PtronVisualizer extends Component {
                             stroke={'blue'}
                             strokeWidth={this.state.count > 0 ? 1 : 0}>
                         </Line>
-                        {points.map((point, pointId) => {
-                            return (
-                                <Circle
-                                    key={pointId}
-                                    x={point.x + 0}
-                                    y={point.y + 0}
-                                    stroke={'black'}
-                                    radius={3}
-                                    opacity={0.7}
-                                    fill={point.fill ? 'black' : 'white'}
-                                ></Circle>)
-                        })
-                        }
-                        <Text
-                            x={550}
-                            y={50}
-                            text='Function Form: Y = M * X + B'
-                            fontFamily='Calibri'
-                            fill='black'
-                            fontSize={25}
-                        ></Text>
-                        <Text
-                            x={550}
-                            y={80}
-                            text={`Original Function: M = ${this.state.M} B = ${this.state.B}`}
-                            fontFamily='Calibri'
-                            fill='black'
-                            fontSize={25}
-                        ></Text>
-                        <Text
-                            x={550}
-                            y={135}
-                            text={`Approximation:\nM = ${aM}\nB = ${aB}`}
-                            fontFamily='Calibri'
-                            fill='black'
-                            fontSize={25}
-                        ></Text>
-                        <Text
-                            x={550}
-                            y={240}
-                            text={`Error:\nM: ${eM}\nB:${eB}`}
-                            fontFamily='Calibri'
-                            fill='red'
-                            fontSize={25}
-                        ></Text>
+                        {circles}
+                        {textComponet}
                     </Layer>
-
-                </Stage >
+                </Stage>
             </>
         );
-
+        return this.state.all;
     }
 
-}
-
-
-function random(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-
-class Perceptron {
-    constructor(n, c) {
-        // Array of weights for inputs
-        this.weights = new Array(n);
-        // Start with random weights
-        for (let i = 0; i < this.weights.length; i++) {
-            this.weights[i] = random(-1, 1);
-        }
-        this.c = c; // learning rate/constant
-    }
-
-    // Function to train the Perceptron
-    // Weights are adjusted based on "desired" answer
-    train(inputs, desired) {
-        // Guess the result
-        let guess = this.feedforward(inputs);
-        // Compute the factor for changing the weight based on the error
-        // Error = desired output - guessed output
-        // Note this can only be 0, -2, or 2
-        // Multiply by learning constant
-        let error = desired - guess;
-        // Adjust weights based on weightChange * input
-        for (let i = 0; i < this.weights.length; i++) {
-            this.weights[i] += this.c * error * inputs[i];
-        }
-    }
-
-    // Guess -1 or 1 based on input values
-    feedforward(inputs) {
-        // Sum all values
-        let sum = 0;
-        for (let i = 0; i < this.weights.length; i++) {
-            sum += inputs[i] * this.weights[i];
-        }
-        // Result is sign of the sum, -1 or 1
-        return this.activate(sum);
-    }
-
-    activate(sum) {
-        if (sum > 0) return 1;
-        else return -1;
-    }
-
-    // Return weights
-    getWeights() {
-        return this.weights;
-    }
 }

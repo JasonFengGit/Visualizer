@@ -154,3 +154,21 @@
         background-color: #00325F;
     }
 }
+
+.connectFourDes{
+    font-family: monospace;
+    animation-name: descriptionAnimation;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes descriptionAnimation{
+    0%{
+        color: white;
+    }
+}

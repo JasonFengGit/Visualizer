@@ -226,7 +226,7 @@ export default class ConnectFour extends Component {
                         </div>
                     </div>
                     <div>
-                    <h5 style={{ position: "absolute", marginTop: "160px", marginLeft: "30px", textAlign: "left" }}>
+                    <h5 class="connectFourDes" style={{ position: "absolute", marginTop: "160px", marginLeft: "30px", textAlign: "left" }}>
                         This is a chess game known as "Connect Four", which you<br/>
                         will need to connect four pieces to win (accept diagonals). <br/>
                         The game has "gravity", so wherever you put the pieces, <br/>
@@ -235,8 +235,8 @@ export default class ConnectFour extends Component {
                         Basically, it will search possible future states of the game<br/>
                         and choose the action that it think is best at the current state<br/>
                         each time. <br/><br/>
-                        It is not a perfect player for this game, so try your best to beat<br/>
-                        it by your "humanity"!
+                        It is not a perfect player for this game, so try your best to<br/>
+                        beat it by your "humanity"!
                     </h5>
                     </div>
                 </div>

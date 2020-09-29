@@ -1,5 +1,5 @@
 .textcontainer{
-    padding-top: 20em;
+    padding-top: 18em;
     display: flex;
     justify-content: center;
 }
@@ -13,7 +13,7 @@
     margin: 0 auto; 
     letter-spacing: .15em;
     animation: 
-        typing 3.5s steps(30, end),
+        typing 2.0s steps(30, end),
         blink-caret .5s step-end infinite;
 }
   

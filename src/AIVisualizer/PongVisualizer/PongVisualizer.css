@@ -7,3 +7,24 @@
 .num{
     color: rgb(93, 139, 112);
 }
+
+.pongDescription{
+    animation-name: pongAnimation;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    animation-delay: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    color: white;
+}
+
+@keyframes pongAnimation{
+    0%{
+        color: white;
+    }
+    100%{
+        color: black;
+    }
+}

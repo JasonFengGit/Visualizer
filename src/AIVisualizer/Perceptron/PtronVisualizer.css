@@ -1,5 +1,19 @@
 .stage{
     position: absolute;
-    margin-top: 80px;
-    margin-left: 25px;
+    margin-top: 70px;
+    margin-left: 15px;
+    animation-name: stageAnimation;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes stageAnimation{
+    0%{
+        margin-top: -500px;
+    }
 }

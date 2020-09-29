@@ -3,13 +3,12 @@ import PtronVisualizer from './Perceptron/PtronVisualizer';
 import PongVisualizer from './PongVisualizer/PongVisualizer';
 import ConnectFour from './ConnectFourVisualizer/ConnectFour';
 import './AIVisualizer.css';
-import TextLoop from 'react-text-loop';
 
 export default class AIVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentAlgorithm: -1,
+            currentAlgorithm: 0,
             algorithms: ['Perceptron', 'Approximate Q', 'Minimax'],
             visualizeAI: () => { },
             reset: () => { }

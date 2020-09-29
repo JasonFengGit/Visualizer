@@ -213,6 +213,7 @@ export default class PongVisualizer extends Component {
     render() {
         if (this.state.notStarted) {
             return (
+                <>
                 <Stage
                         width={this.state.width}
                         height={this.state.height}
@@ -255,7 +256,22 @@ export default class PongVisualizer extends Component {
                                 fontSize={30}
                             ></Text>
                         </Layer>
+                        
                     </Stage>
+                    <div class="pongDescription">
+                        <h4 style={{ marginTop: "0px", marginLeft: "650px", "text-align": "left", fontFamily: "monospace" }}>
+                            <br /><br /><br /><br />
+                            This is a simple illustration of Reinforcement Learning, "Apporixmate Q Learning" specifically.<br/><br/>
+                            
+                            Our agent is given "vision" to current distance from the panel to the ball, distance from the
+                            ball to the nearest dot, and the number of dots remaining. The agent may try some random moves initially,
+                            and get "rewards"(positive score) and "punishments"(negative score) when eating the dots and dying.<br/><br/>
+
+                            After some trials, our agent would appear to know that bouncing the ball back would eventually lead it to "rewards", 
+                            and manage to do that to finally win the game (eating all 5 dots).
+                        </h4>
+                    </div>
+                    </>
             );
         }
         let { "min_dis_to_dot": w1,

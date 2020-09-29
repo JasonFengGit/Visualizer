@@ -9,7 +9,7 @@ export default class Visualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'main',
+            mode: 'ai',
             rendering: false,
             algorithms: [],
             currentAlgorithm: null,
