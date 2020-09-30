@@ -1,5 +1,5 @@
 .textcontainer{
-    padding-top: 18em;
+    margin-top: 15em;
     display: flex;
     justify-content: center;
 }
@@ -16,15 +16,16 @@
         typing 2.0s steps(30, end),
         blink-caret .5s step-end infinite;
 }
-  
+
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+    from { width: 0; color: black; }
+    to { width: 100%; color: black;  }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: rgb(0, 0, 0) }
+    from, to { 
+      border-right: .15em solid; border-color: transparent }
+    50% { border-right: .15em solid; border-color: rgb(0, 0, 0) }
 }
 /* Stars 
 ------------------------------------- */

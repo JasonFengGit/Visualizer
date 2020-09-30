@@ -19,6 +19,7 @@ export default class Visualizer extends Component {
             sortingClicked: false,
             pathClicked: false,
             AIClicked: false,
+            aicount: 0,
         };
         this.getFunctions = this.getFunctions.bind(this);
         this.changeRenderingState = this.changeRenderingState.bind(this);
@@ -47,7 +48,7 @@ export default class Visualizer extends Component {
             renderObj = <SortingVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions} />;
         }
         else if (this.state.mode === 'ai') {
-            renderObj = <AIVisualizer setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions}></AIVisualizer>
+            renderObj = <AIVisualizer count={this.state.aicount} setVisualizerRendering={this.changeRenderingState} getFunctions={this.getFunctions}></AIVisualizer>
         }
         else {
             renderObj =
@@ -88,7 +89,7 @@ export default class Visualizer extends Component {
                         </a>
                         <a href='#' className='mainpage b' onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true });
+                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true});
                             }
                         }} data-toggle={this.state.AIClicked ? "" : "modal"} data-target="#aiIntroModal">
                             <span></span>
@@ -137,8 +138,9 @@ export default class Visualizer extends Component {
                     >Sorting</button>
                     <button
                         onClick={() => {
+                            
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true });
+                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true});
                                 this.state.setAlgorithm(-1);
                             }
                         }}

@@ -18,6 +18,7 @@
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
     "react-konva": "^16.13.0-6",
+    "react-load-script": "0.0.6",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
