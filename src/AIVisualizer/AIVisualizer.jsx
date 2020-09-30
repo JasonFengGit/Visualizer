@@ -24,7 +24,7 @@ export default class AIVisualizer extends Component {
     componentDidMount(){
         this.newScript("https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/TweenLite.min.js");
         this.newScript("https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/EasePack.min.js");
-        this.newScript("http://yourjavascript.com/39003444322/networkanimation.js");
+        this.newScript("https://drive.google.com/uc?export=view&id=1mvQtt6H9xa1k3Iwsw5PoYFDq8zEmg_SO");
     }
 
     getAIFunctions(run, reset) {
