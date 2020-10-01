@@ -4,12 +4,13 @@ import PathFindingVisualizer from './PathFindingVisualizer/PathFindingVisualizer
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
 import './Visualizer.css'
 import AIVisualizer from './AIVisualizer/AIVisualizer';
+import { Link } from 'react-router-dom';
 
 export default class Visualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'main',
+            mode: 'ai',
             rendering: false,
             algorithms: [],
             currentAlgorithm: null,
@@ -70,7 +71,7 @@ export default class Visualizer extends Component {
                             <p class="secondline lead">Click on one of the categories below to visualize algorithms.</p>
 
                         </h1>
-                        <a href='#' className='mainpage b' onClick={() => {
+                        <a href='' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'pathfinding' });
                                 this.setState({ currentAlgorithm: null, pathClicked: true });
@@ -79,7 +80,7 @@ export default class Visualizer extends Component {
                             <span></span>
                             PATH FINDING
                         </a>
-                        <a href='#' className='mainpage b' onClick={() => {
+                        <a href='' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'sorting', currentAlgorithm: null, sortingClicked: true });
                             }
@@ -87,7 +88,7 @@ export default class Visualizer extends Component {
                             <span></span>
                             SORTING
                         </a>
-                        <a href='#' className='mainpage b' onClick={() => {
+                        <a href='' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true});
                             }
@@ -176,7 +177,11 @@ export default class Visualizer extends Component {
                             </li>
                         </div>
                     </div>
+                    <a href="https://github.com/JasonFengGit" style={{marginLeft: "32%"}}>
+                        <img src="https://www.linkpicture.com/q/UIHere_1.png" width="40px" height="40px" style={{opacity:"0.7 !important"}}></img>
+                    </a>
                 </nav>
+                
                 <div class="modal fade" id="setAlgoModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -293,6 +298,7 @@ export default class Visualizer extends Component {
                 </div>
                 <div>
                     {renderObj}
+                    
                 </div>
             </>
         )

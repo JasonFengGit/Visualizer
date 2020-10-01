@@ -97,16 +97,16 @@
     font-family: consolas;
 }
 
-h1+a{
+h1+.mainpage-b{
     margin-left: 30px;
     color: rgb(255, 255, 255);
     background: rgb(255, 255, 255);
 }
-a+a{
+.mainpage-b+.mainpage-b{
     color: rgb(255, 255, 255);
     background: rgb(255, 255, 255);
 }
-a{  
+.mainpage-b{  
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -145,7 +145,7 @@ a{
 
 }
 
-a:hover{
+.mainpage-b:hover{
     color: #888742;
     background:var(--hover-color);
     box-shadow: 0 0 10px var(--hover-color), 0 0 40px var(--hover-color), 0 0 80px var(--hover-color);
@@ -153,12 +153,12 @@ a:hover{
     transition-delay: 0.2s;
 }
 
-a span{
+.mainpage-b span{
     position: absolute;
     display: block;
 }
 
-a span:nth-child(1){
+.mainpage-b span:nth-child(1){
     top: 0;
     left: -100%;
     width: 100%;
@@ -166,7 +166,7 @@ a span:nth-child(1){
     background: linear-gradient(90deg, transparent,var(--hover-color));
 }
 
-a:hover span:nth-child(1){
+.mainpage-b:hover span:nth-child(1){
     left: 100%;
     transition: 1s;
 }

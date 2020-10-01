@@ -217,7 +217,7 @@ export default class PongVisualizer extends Component {
                 <Stage
                         width={this.state.width}
                         height={this.state.height}
-                        className='pong stage'
+                        className='pong-stage-notstarted'
                         id='pong stage'
                     >
                         <Layer>
@@ -326,7 +326,7 @@ export default class PongVisualizer extends Component {
                     <Stage
                         width={this.state.width}
                         height={this.state.height}
-                        className='pong stage'
+                        className='pong-stage'
                         id='pong stage'
                     >
                         <Layer>
@@ -360,7 +360,7 @@ export default class PongVisualizer extends Component {
                     <Stage
                         width={this.state.width}
                         height={this.state.height}
-                        className='pong stage'
+                        className='pong-stage'
                         id='pong stage'
                     >
                         <Layer>

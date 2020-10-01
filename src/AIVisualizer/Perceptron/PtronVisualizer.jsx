@@ -8,7 +8,7 @@ export default class PtronVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            training: new Array(1000),
+            training: new Array(1002),
             rendering: false,
             min: -1,
             max: 1,
@@ -143,7 +143,16 @@ export default class PtronVisualizer extends Component {
                     fontFamily='Calibri'
                     fill='red'
                     fontSize={25}
-                ></Text></>
+                ></Text>
+                <Text
+                    x={550}
+                    y={340}
+                    text={`Count: ${this.state.count}`}
+                    fontFamily='Calibri'
+                    fill='grey'
+                    fontSize={25}
+                ></Text>
+                </>
         }
         else {
             textComponet = <><Text
@@ -177,7 +186,16 @@ export default class PtronVisualizer extends Component {
                     fontFamily='Calibri'
                     fill='red'
                     fontSize={25}
-                ></Text></>
+                ></Text>
+                <Text
+                    x={550}
+                    y={340}
+                    text={`Count: ${this.state.count}`}
+                    fontFamily='Calibri'
+                    fill='grey'
+                    fontSize={25}
+                ></Text>
+                </>
         }
         let circles = points.map((point, pointId) => {
             return (<Circle
@@ -195,7 +213,7 @@ export default class PtronVisualizer extends Component {
                 <Stage
                     width={500 * 2}
                     height={500 + 1}
-                    className='stage'
+                    className='ptron-stage'
                     id='stage'
                 >
                     <Layer name="layer" ref={ref => (this.state.layer = ref)}>
