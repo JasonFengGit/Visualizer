@@ -8,7 +8,7 @@ export default class AIVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentAlgorithm: 0,
+            currentAlgorithm: -1,
             algorithms: ['Perceptron', 'Approximate Q', 'Minimax'],
             visualizeAI: () => { },
             reset: () => { },
