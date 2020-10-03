@@ -213,3 +213,9 @@ h1+.mainpage-b{
     background-image: url("f.svg");
     background-size: 30px, 30px;
 }
+
+.githubimg{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

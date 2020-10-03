@@ -3,7 +3,20 @@
   height: 25px; 
   outline: 1px solid rgb(175, 174, 174);
   display: inline-block;
-  
+  animation-name: nodeAnimation;
+  animation-duration: 5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes nodeAnimation{
+  100%{
+    /*background-color: white;*/
+  }
 }
 
 .node-finish {
@@ -28,7 +41,8 @@
   }
   100%{
     transform: scale(1);
-    background-color: rgb(231, 231, 163);
+    background-color:rgb(231, 231, 163);
+    
   }
 }
 
@@ -43,23 +57,17 @@
   animation-play-state: running;
   background-image: url('start.svg');
   background-size: 25px, 25px;
-  outline: 0px;
 }
 
 @keyframes startNodeAnimation{
   0% {
-    
-    transform: scale(0.1);
-    border-radius: 50%;
     background-color: white;
   }
   75% {
-    border-radius: 70%;
     transform: scale(1.05);
   }
   100%{
     transform: scale(1);
-    border-radius: 90%;
     background-color: rgb(227, 228, 159);
   }
 }

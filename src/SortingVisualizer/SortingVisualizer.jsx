@@ -8,14 +8,17 @@ export default class SortingVisualizer extends Component {
         super(props);
         this.state = {
             piles: [],
-            numPiles: 40,
+            numPiles: 30,
             finished: false,
             maxPile: 80,
             changingPiles: [],
             pileDelayTimes: [30, 40, 40, 80, 80],
+            DelayTimesSizeBased: {'fast': [15, 20, 20, 40, 40], 'median': [30, 40, 40, 80, 80], 'slow': [60, 80, 80, 160, 160]},
             colorSetIndex: getRandomInt(0, 3),
             currentAlgorithm: -1,
             unsortedPiles: [],
+            speed: "median",
+            size: "median",
             algorithms: ['Selection Sort', 'Bubble Sort', 'Insertion Sort', 'Merge Sort', 'Quick Sort'],
             sortingAlgorithms: [selectionSort, bubbleSort, insertionSort, mergeSort, quickSort]
         };
@@ -35,7 +38,7 @@ export default class SortingVisualizer extends Component {
 
     setAlgorithm(algoId) {
         if (this.state.unsortedPiles !== []) {
-            this.setState({ finished: false, changingPiles: [], piles: this.state.unsortedPiles });
+            this.setState({ finished: false, changingPiles: [], piles: this.state.unsortedPiles, pivot: -1 });
         }
         this.setState({ currentAlgorithm: algoId });
     }
@@ -63,7 +66,6 @@ export default class SortingVisualizer extends Component {
         }
         if (this.state.rendering) return;
         if (this.state.finished) {
-            console.log(1);
             this.state.finished = false;
             this.state.changingPiles = [];
             this.state.piles = this.state.unsortedPiles;
@@ -93,12 +95,25 @@ export default class SortingVisualizer extends Component {
         this.setState({ piles: piles, unsortedPiles: piles.slice() });
     }
 
+    setSpeed(speed) {
+        this.setState({ speed: speed, pileDelayTimes: this.state.DelayTimesSizeBased[speed] });
+    }
+
+    setSize(s) {
+        if(this.state.size === s) return;
+        let sizes = {"small": 20, "median": 30, "large": 40};
+        this.setState({ size: s, numPiles: sizes[s] });
+        this.state.numPiles = sizes[s];
+        const piles = this.initializePiles();
+        this.setState({ finished: false, changingPiles: [], piles: piles, unsortedPiles: piles.slice() });
+    }
+
     render() {
         const piles = this.state.piles;
 
         return (
             <>
-                
+
                 <div className='piles' class="container">
                     {
 
@@ -111,16 +126,45 @@ export default class SortingVisualizer extends Component {
                                     key={pileId}
                                     index={pileId}
                                     val={pile}
+                                    size={this.state.size}
                                     isChanging={this.state.changingPiles.indexOf(pileId) !== -1}
                                     isPivot={this.state.pivot == pile}
                                     colorSetIndex={this.state.colorSetIndex}
                                 ></Pile>
                             )
                         })
-                        
+
                     }
-                   
+
                 </div>
+                
+                <div class="d-flex" style={{marginLeft: "37%", marginTop: "10px"}}>
+                    <div class="dropdown 1">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" disabled={this.state.rendering} id="dropdownMenuSpeed" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ marginRight: "5px", height: "30px", width: "150px" }}>
+                            <p style={{ "margin-top": "-5px" }}>{`Speed: ${this.state.speed}`}</p>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSpeed">
+                            <li>
+                                <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setSpeed('slow')}><p style={{ "margin-top": "-5px" }}>{`slow`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setSpeed('median')}><p style={{ "margin-top": "-5px" }}>{`median`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setSpeed('fast')}><p style={{ "margin-top": "-5px" }}>{`fast`}</p></button>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="dropdown 1">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" disabled={this.state.rendering} id="dropdownMenuSize" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ marginLeft: "5px", height: "30px", width: "150px" }}>
+                            <p style={{ "margin-top": "-5px" }}>{`Size: ${this.state.size}`}</p>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSize">
+                            <li>
+                                <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setSize('small')}><p style={{ "margin-top": "-5px" }}>{`small`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setSize('median')}><p style={{ "margin-top": "-5px" }}>{`median`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setSize('large')}><p style={{ "margin-top": "-5px" }}>{`large`}</p></button>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+
             </>
         );
     }

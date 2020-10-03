@@ -19,6 +19,8 @@ export default class PathFindingVisualizer extends Component {
             numCol: 37,
             SR: 7,
             SC: 5,
+            speed: 'median',
+            delays: {'slow': 17, 'median': 7, 'fast': 3},
             currentAlgorithm: -1,
             algorithms: ['BFS', 'Dijkstra', 'A Star', 'DFS'],
             pathfindingAlgorithms: [BFS, dijkstra, AStar, DFS]
@@ -90,6 +92,7 @@ export default class PathFindingVisualizer extends Component {
         else if (!this.state.rendering) {
             this.updateGridWithWall(this.state.grid, row, col);
             this.setState({ mouseIsPressed: true });
+            this.clearVisitedAndPath();
         }
     }
 
@@ -113,9 +116,7 @@ export default class PathFindingVisualizer extends Component {
                 this.state.grid[row][col].isStart = true;
             }
             this.setState({ SR: row, SC: col });
-            //console.log(11, row, col, this.state.SR, this.state.SC);
-            //this.setState({ SR: row, SC: col });
-            //console.log(11, row, col, this.state.SR, this.state.SC);
+            this.clearVisitedAndPath();
 
         }
         else if (this.state.changingFinish && !(row === this.state.SR && col === this.state.SC)) {
@@ -132,6 +133,7 @@ export default class PathFindingVisualizer extends Component {
                 this.state.grid[row][col].isFinish = true;
             }
             this.setState({ FR: row, FC: col });
+            this.clearVisitedAndPath();
         }
 
     }
@@ -174,7 +176,7 @@ export default class PathFindingVisualizer extends Component {
                 const node = visitedInOrder[i];
                 if (!node.isStart && !node.isFinish)
                     document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-visited';
-            }, 7 * i);
+            }, this.state.delays[this.state.speed] * i);
         }
 
         for (let i = 0; i < shortedPath.length; i++) {
@@ -182,13 +184,13 @@ export default class PathFindingVisualizer extends Component {
                 const node = shortedPath[i];
                 if (!node.isStart && !node.isFinish)
                     document.getElementById(`node-${node.row}-${node.col}`).className = 'node node-path';
-            }, 7 * visitedInOrder.length + 50 * i);
+            }, this.state.delays[this.state.speed] * visitedInOrder.length + 50 * i);
 
         }
         setTimeout(() => {
             this.setState({ rendering: false });
             this.props.setVisualizerRendering(false);
-        }, 7 * visitedInOrder.length + 50 * shortedPath.length);
+        }, this.state.delays[this.state.speed] * visitedInOrder.length + 50 * shortedPath.length);
 
     }
 
@@ -198,26 +200,28 @@ export default class PathFindingVisualizer extends Component {
 
     }
 
+    clearVisitedAndPath(){
+        for(let row = 0; row < this.state.numRow; row++){
+            for(let col = 0; col < this.state.numCol; col++){
+                let n = document.getElementById(`node-${row}-${col}`);
+                console.log(n);
+                if(n && (n.className == 'node node-visited' || n.className == 'node node-path')){
+                    n.className = 'node';
+                }
+            }
+        }
+    }
+
+    setSpeed(speed){
+        this.setState({speed: speed});
+    }
+
     render() {
 
         const grid = this.state.grid;
 
         return (
             <>
-                {/*
-                <button
-                    onClick={() => { this.visualizePathfinding() }}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}>
-                    visualize
-                </button>
-                <button
-                    onClick={() => this.clearVisualizer()}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}>
-                    clear
-            </button>*/}
-
                 <div className="grid">
                     {grid.map((row, rowId) => {
                         return (
@@ -245,20 +249,30 @@ export default class PathFindingVisualizer extends Component {
                     })
                     }
                 </div>
-                {/*
-                <button
-                    onClick={() => { recursiveDivisionMaze(this.state.grid); this.setState({ finish: false }) }}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}>
-                    recursive maze
-                </button>*/}
-                <button
-                    onClick={() => { primMaze(this.state.grid); this.setState({ finish: false }) }}
-                    type="button" class="btn btn-outline-dark"
-                    style={{ "margin-top": "5px", "height": "30px" }}
-                    disabled={this.state.rendering}>
-                    <p style={{ "margin-top": "-6px" }}>generate maze</p>
-                </button>
+                <div class={"dropdown"} style={{marginTop: "10px"}}>
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" disabled={this.state.rendering} id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{marginRight:"5px", height: "30px", width: "150px" }}>
+                            <p style={{ "margin-top": "-5px" }}>{`Speed: ${this.state.speed}`}</p>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button type="button" class="btn btn-light navbtn" style={{height: "30px"}} onClick={() => this.setSpeed('slow')}><p style={{ "margin-top": "-5px" }}>{`slow`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{height: "30px"}} onClick={() => this.setSpeed('median')}><p style={{ "margin-top": "-5px" }}>{`median`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{height: "30px"}} onClick={() => this.setSpeed('fast')}><p style={{ "margin-top": "-5px" }}>{`fast`}</p></button>
+                            </li>
+                        </div>
+                        <button
+                        onClick={() => { 
+                            primMaze(this.state.grid);
+                            this.setState({ finish: false});
+                            this.clearVisitedAndPath();
+                        }}
+                        type="button" class="btn btn-outline-dark"
+                        style={{marginLeft: "5px", "height": "30px"}}
+                        disabled={this.state.rendering}>
+                        <p style={{ "margin-top": "-6px" }}>generate maze</p>
+                        
+                    </button>
+                </div>
             </>
         )
     }

@@ -219,9 +219,9 @@ export default class ConnectFour extends Component {
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(3)}><p style={{ "margin-top": "-5px" }}>{`Depth: 3`}</p></button>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(4)}><p style={{ "margin-top": "-5px" }}>{`Depth: 4`}</p></button>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.setDepth(5)}><p style={{ "margin-top": "-5px" }}>{`Depth: 5`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{height: "30px"}} onClick={() => this.setDepth(3)}><p style={{ "margin-top": "-5px" }}>{`Depth: 3`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{height: "30px"}} onClick={() => this.setDepth(4)}><p style={{ "margin-top": "-5px" }}>{`Depth: 4`}</p></button>
+                                <button type="button" class="btn btn-light navbtn" style={{height: "30px"}} onClick={() => this.setDepth(5)}><p style={{ "margin-top": "-5px" }}>{`Depth: 5`}</p></button>
                             </li>
                         </div>
                     </div>
