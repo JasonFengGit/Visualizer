@@ -67,70 +67,105 @@ class MinimaxAgent {
         const count2 = this.count(four, "p2");
 
         if (count1 === 2 && countN === 2) {
-            return -500;
+            return {sc: -500, three: 0};
         }
         if (count1 === 3 && countN === 1) {
-            return -1000;
+            return {sc: -1000, three: -1};
         }
         
         if (count1 === 4) {
-            return -100000;
+            return {sc: -100000, three: 0};
         }
         if (count2 === 4) {
-            return 90000;
+            return {sc: 90000, three: 0};
         }
-        return count2;
-        /*
-        if (count1 === 2 && countN === 2) {
-            return -500;
+
+        if(count2 === 3 && countN==0){
+            return {sc: 0, three: 1};
         }
-        if (count1 === 3 && countN === 1) {
-            return -10000;
+        if(count1 === 3){
+            return {sc: 0, three: -1};
         }
-        if (count2 === 3 && countN === 1) {
-            return 300;
-        }
-        if (count1 === 4) {
-            return -100000;
-        }
-        if (count2 === 4) {
-            return 100000;
-        }
-        return count2;
-        */
+        return {sc: count2, three: 0};;
+        
     }
 
     getScore(board) {
         let score = 0;
 
-        score += 3 * this.count(board[3], "p2");
-
+        score += 5 * this.count(board[3], "p2");
+        let threes_one = []
+        let threes_two = []
         for (let c = 0; c < 7; c++) {
             for (let r = 1; r < 4; r++) {
-                score += this.scoreFour(board[c][r], board[c][r + 1], board[c][r + 2], board[c][r + 3]);
+                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c][r + 1], board[c][r + 2], board[c][r + 3]);
+                score += sc;
+                if(three==1){
+                    threes_two.push([(c, r), (c, r+1), (c, r+2), (c, r+3)]);
+                }
+                else if(three==-1){
+                    threes_one.push([(c, r), (c, r+1), (c, r+2), (c, r+3)]);
+                }
             }
         }
 
 
         for (let c = 0; c < 4; c++) {
             for (let r = 1; r < 7; r++) {
-                score += this.scoreFour(board[c][r], board[c + 1][r], board[c + 2][r], board[c + 3][r]);
+                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c + 1][r], board[c + 2][r], board[c + 3][r]);
+                score += sc;
+                if(three==1){
+                    threes_two.push([(c, r), (c+1, r), (c+2, r), (c+3, r)]);
+                }
+                else if(three==-1){
+                    threes_one.push([(c, r), (c+1, r), (c+2, r), (c+3, r)]);
+                }
             }
         }
 
         for (let c = 0; c < 4; c++) {
             for (let r = 1; r < 4; r++) {
-                score += this.scoreFour(board[c][r], board[c + 1][r + 1], board[c + 2][r + 2], board[c + 3][r + 3]);
+                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c + 1][r + 1], board[c + 2][r + 2], board[c + 3][r + 3]);
+                score += sc;
+                if(three==1){
+                    threes_two.push([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
+                }
+                else if(three==-1){
+                    threes_one.push([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
+                }
             }
         }
 
         for (let c = 3; c < 7; c++) {
             for (let r = 1; r < 4; r++) {
-                score += this.scoreFour(board[c][r], board[c - 1][r + 1], board[c - 2][r + 2], board[c - 3][r + 3]);
+                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c - 1][r + 1], board[c - 2][r + 2], board[c - 3][r + 3]);
+                score += sc;
+                if(three==1){
+                    threes_two.push([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
+                }
+                else if(three==-1){
+                    threes_one.push([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
+                }
             }
         }
+        score += 2000*(this.numDuplicate(threes_two)-2*this.numDuplicate(threes_one));
         return score;
     }
+
+    numDuplicate(arr){
+        let count = {};
+        let result = 0;
+        for (let ele of arr){
+            if(count[ele]){
+                result++;
+            }
+            else{
+                count[ele] = 1;
+            }
+        }
+        return result;
+    }
+
     toHash(board) {
         let re = "";
         for (let c = 0; c < 7; c++) {
