@@ -119,12 +119,12 @@ function partition(piles, start, end, statesInOrder) {
         if (piles[j] < pivot) {
             i++;
             swap(piles, i, j);
-            const temp = { piles: piles.slice(), changing: [pivot, i, j] };
+            const temp = { piles: piles.slice(), changing: [pivot, i, j], pivot: pivot};
             statesInOrder.push(temp);
         }
     }
     swap(piles, i + 1, end);
-    const temp = { piles: piles.slice(), changing: [pivot, i + 1, end] };
+    const temp = { piles: piles.slice(), changing: [pivot, i + 1, end], pivot: pivot};
     statesInOrder.push(temp);
     return i + 1;
 }

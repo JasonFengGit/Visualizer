@@ -74,9 +74,9 @@ export default class SortingVisualizer extends Component {
 
         const statesInOrder = this.state.sortingAlgorithms[this.state.currentAlgorithm](piles);
         for (let i = 0; i < statesInOrder.length; i++) {
-            const { piles: state, changing: changingPiles } = statesInOrder[i];
+            const { piles: state, changing: changingPiles, pivot: pivot } = statesInOrder[i];
             setTimeout(() => {
-                this.setState({ piles: state, changingPiles: changingPiles });
+                this.setState({ piles: state, changingPiles: changingPiles, pivot: pivot });
             }, this.state.pileDelayTimes[this.state.currentAlgorithm] * i);
 
         }
@@ -98,19 +98,7 @@ export default class SortingVisualizer extends Component {
 
         return (
             <>
-                {/*
-                <button
-                    onClick={() => this.visualizeSorting()}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}>
-                    Sort!
-                </button>
-                <button
-                    onClick={() => this.randomizePiles()}
-                    type="button" class="btn btn-outline-dark"
-                    disabled={this.state.rendering}>
-                    Randomize!
-                </button>*/}
+                
                 <div className='piles' class="container">
                     {
 
@@ -121,15 +109,17 @@ export default class SortingVisualizer extends Component {
                                     finished={this.state.finished}
                                     className='pile'
                                     key={pileId}
+                                    index={pileId}
                                     val={pile}
                                     isChanging={this.state.changingPiles.indexOf(pileId) !== -1}
-
+                                    isPivot={this.state.pivot == pile}
                                     colorSetIndex={this.state.colorSetIndex}
                                 ></Pile>
                             )
                         })
+                        
                     }
-
+                   
                 </div>
             </>
         );
