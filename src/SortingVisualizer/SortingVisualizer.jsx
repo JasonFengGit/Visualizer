@@ -16,6 +16,11 @@ export default class SortingVisualizer extends Component {
             DelayTimesSizeBased: {'fast': [15, 20, 20, 40, 40], 'median': [30, 40, 40, 80, 80], 'slow': [60, 80, 80, 160, 160]},
             colorSetIndex: getRandomInt(0, 3),
             currentAlgorithm: -1,
+            descriptions: ['Selection Sort: repeatedly find the minimum element from the unsorted part and append it to the sorted part.', 
+                           'Bubble Sort: repeatedly swap the adjacent elements if they are in wrong order.',
+                           'Insertion Sort: repeatedly place value from the unsorted part at the correct position in the sorted part(by finding the closest left-side element that is smaller than it).',
+                           'Merge Sort: divide the array into two halves, sort them recursively using merge sort, and then merge the two halves.',
+                           'Quick Sort: choose an element as pivot, arrange the array such that the elements smaller than pivot are on its left and others are on its right, sort the two halves recursively.'],
             unsortedPiles: [],
             speed: "median",
             size: "median",
@@ -164,6 +169,7 @@ export default class SortingVisualizer extends Component {
                         </div>
                     </div>
                 </div>
+                <h6 class='algoDescription'>{this.state.currentAlgorithm === -1 ? "Welcome to Sorting. Select an algorithm first." : this.state.descriptions[this.state.currentAlgorithm]}</h6>
 
             </>
         );

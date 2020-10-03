@@ -25,7 +25,6 @@ function selectionSort(piles) {
 }
 
 function bubbleSort(piles) {
-    //optimized !
     let statesInOrder = [];
     let n = piles.length;
     while (n > 1) {

@@ -1,3 +1,31 @@
 .piles{
     grid-row-gap: 5px;
 }
+
+.algoDescription{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;    
+    -o-user-select: none;
+    user-select: none;
+    margin-top: 5%;
+    animation-name: sortingDescriptionAnimation;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    color: black;
+}
+
+@keyframes sortingDescriptionAnimation{
+    0%{
+        margin-top: 0%;
+        color: white;
+    }
+    100%{
+    }
+
+}

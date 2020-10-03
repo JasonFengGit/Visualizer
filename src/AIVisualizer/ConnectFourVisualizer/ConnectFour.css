@@ -156,6 +156,11 @@
 }
 
 .connectFourDes{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;    
+    -o-user-select: none;
+    user-select: none;
     font-family: monospace;
     animation-name: descriptionAnimation;
     animation-duration: 1.5s;
