@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PtronVisualizer from './Perceptron/PtronVisualizer';
 import PongVisualizer from './PongVisualizer/PongVisualizer';
 import ConnectFour from './ConnectFourVisualizer/ConnectFour';
+import NNSnakeVisualizer from './NNSnakeVisualizer/NNSnakeVisualizer';
 import './AIVisualizer.css';
 
 export default class AIVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentAlgorithm: 2,
+            currentAlgorithm: -1,
             algorithms: ['Perceptron', 'Approximate Q', 'Minimax'],
             visualizeAI: () => { },
             reset: () => { },
@@ -76,6 +77,9 @@ export default class AIVisualizer extends Component {
                 break;
             case 2:
                 renderObj = <ConnectFour setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></ConnectFour>
+                break;
+            case 3:
+                renderObj = <NNSnakeVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></NNSnakeVisualizer>
                 break;
         }
         return (

@@ -1,0 +1,21 @@
+.snakeNode-null {
+    width: 15px;
+    height: 15px;
+    background-color: rgb(0, 0, 0);
+    display: inline-block;
+}
+
+.snakeNode-food {
+    width: 15px;
+    height: 15px;
+    background-color: rgb(241, 185, 185);
+    display: inline-block;
+}
+
+.snakeNode-snake {
+    width: 15px;
+    height: 15px;
+    outline: 1px solid;
+    background-color: rgb(72, 230, 51);
+    display: inline-block;
+}
