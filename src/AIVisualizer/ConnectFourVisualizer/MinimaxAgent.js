@@ -37,7 +37,6 @@ class MinimaxAgent {
         board = board.map((a) => a.slice());
         for (const action of actions) {
             const boardCopy = board.map((a) => a.slice());
-            console.log(this.depth);
             let val = this.minimax(this.tryMove(action, boardCopy, this.aiPiece), false, -Infinity, Infinity, this.depth);
             //console.log(val);
             //console.log(action, val, boardCopy, this.getScore(boardCopy));
@@ -69,7 +68,6 @@ class MinimaxAgent {
 
     scoreFour(a, b, c, d) {
         const four = [a, b, c, d];
-        let score = 0;
         const count1 = this.count(four, this.humanPiece);
         const countN = this.count(four, null);
         const count2 = this.count(four, this.aiPiece);
@@ -94,8 +92,30 @@ class MinimaxAgent {
         if(count1 === 3){
             return {sc: 0, three: -1};
         }
-        return {sc: count2, three: 0};;
+        return {sc: count2, three: 0};
         
+    }
+
+    scoreFour2(a, b, c, d) {
+        const four = [a, b, c, d];
+        const count1 = this.count(four, this.humanPiece);
+        const countN = this.count(four, null);
+        const count2 = this.count(four, this.aiPiece);
+
+        if(countN === 4 || (count1 > 0 && count2 > 0)) return {sc:0, three:0};
+        if(count1 === 4){
+            return {sc: -10000000000, three: -1};
+        } 
+        if(count2 === 4){
+            return {sc: 100000000000, three: 1};
+        } 
+        if(count1 === 0){
+            return {sc: Math.pow(10*count2, count2), three: count2 >= 3 ? 1 : 0};
+        }
+        if(count2 === 0){
+            return {sc: -Math.pow(10*count2, count2), three: count1 >= 3 ? -1 : 0};
+        }
+        return {sc: 0, three: 0};
     }
 
     getScore(board) {
@@ -106,13 +126,13 @@ class MinimaxAgent {
         let threes_two = []
         for (let c = 0; c < 7; c++) {
             for (let r = 1; r < 4; r++) {
-                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c][r + 1], board[c][r + 2], board[c][r + 3]);
+                let {sc:sc, three:three} = this.scoreFour2(board[c][r], board[c][r + 1], board[c][r + 2], board[c][r + 3]);
                 score += sc;
                 if(three==1){
-                    threes_two.push([(c, r), (c, r+1), (c, r+2), (c, r+3)]);
+                    threes_two = threes_two.concat([{row:c, col:r}, {row: c, col:r+1}, {row:c, col:r+2}, {row: c, col:r+3}]);
                 }
                 else if(three==-1){
-                    threes_one.push([(c, r), (c, r+1), (c, r+2), (c, r+3)]);
+                    threes_one = threes_one.concat([{row:c, col:r}, {row: c, col:r+1}, {row:c, col:r+2}, {row: c, col:r+3}]);
                 }
             }
         }
@@ -120,57 +140,63 @@ class MinimaxAgent {
 
         for (let c = 0; c < 4; c++) {
             for (let r = 1; r < 7; r++) {
-                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c + 1][r], board[c + 2][r], board[c + 3][r]);
+                let {sc:sc, three:three} = this.scoreFour2(board[c][r], board[c + 1][r], board[c + 2][r], board[c + 3][r]);
                 score += sc;
-                if(three==1){
-                    threes_two.push([(c, r), (c+1, r), (c+2, r), (c+3, r)]);
+                if(three === 1){
+                    threes_two = threes_two.concat([{row:c, col:r}, {row: c+1, col:r}, {row:c+2, col:r}, {row: c+3, col:r}]);
                 }
-                else if(three==-1){
-                    threes_one.push([(c, r), (c+1, r), (c+2, r), (c+3, r)]);
+                else if(three === -1){
+                    threes_one = threes_one.concat([{row:c, col:r}, {row: c+1, col:r}, {row:c+2, col:r}, {row: c+3, col:r}]);
                 }
             }
         }
 
         for (let c = 0; c < 4; c++) {
             for (let r = 1; r < 4; r++) {
-                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c + 1][r + 1], board[c + 2][r + 2], board[c + 3][r + 3]);
+                let {sc:sc, three:three} = this.scoreFour2(board[c][r], board[c + 1][r + 1], board[c + 2][r + 2], board[c + 3][r + 3]);
                 score += sc;
-                if(three==1){
-                    threes_two.push([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
+                if(three === 1){
+                    //threes_two = threes_two.concat([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
                 }
-                else if(three==-1){
-                    threes_one.push([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
+                else if(three ===-1){
+                    //threes_one = threes_one.concat([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
                 }
             }
         }
 
         for (let c = 3; c < 7; c++) {
             for (let r = 1; r < 4; r++) {
-                let {sc:sc, three:three} = this.scoreFour(board[c][r], board[c - 1][r + 1], board[c - 2][r + 2], board[c - 3][r + 3]);
+                let {sc:sc, three:three} = this.scoreFour2(board[c][r], board[c - 1][r + 1], board[c - 2][r + 2], board[c - 3][r + 3]);
                 score += sc;
                 if(three==1){
-                    threes_two.push([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
+                    //threes_two = threes_two.concat([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
                 }
                 else if(three==-1){
-                    threes_one.push([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
+                   //threes_one = threes_one.concat([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
                 }
             }
         }
-        score += 2000*(this.numDuplicate(threes_two)-2*this.numDuplicate(threes_one));
+        let d2 = this.numDuplicate(threes_two);
+        let d1 = this.numDuplicate(threes_one);
+        //console.log(d1, d2);
+        //score += 1000 * d2 - 1000 * d1;
         return score;
     }
 
     numDuplicate(arr){
+        console.log(arr);
         let count = {};
         let result = 0;
         for (let ele of arr){
             if(count[ele]){
+                console.log(ele);
                 result++;
             }
             else{
                 count[ele] = 1;
             }
         }
+        console.log(count, result);
         return result;
     }
 
