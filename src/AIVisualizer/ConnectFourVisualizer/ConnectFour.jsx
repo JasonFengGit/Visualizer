@@ -86,8 +86,9 @@ export default class ConnectFour extends Component {
     }
 
     setDepth(d) {
-        this.setState({ depth: d });
-        this.state.minimaxAgent.setDepth(d);
+        if(d !== this.state.depth){
+            this.setState({ depth: d, minimaxAgent: new MinimaxAgent(new Array(7).fill(new Array(7).fill(null)), d, this.state.humanPlayer)});
+        }
     }
 
     handleClick(colId) {

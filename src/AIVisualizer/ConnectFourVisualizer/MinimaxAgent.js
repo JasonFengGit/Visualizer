@@ -4,7 +4,6 @@ class MinimaxAgent {
     constructor(board, depth, humanPlayer) {
         this.cache = {};
         this.depth = depth;
-        this.getAction(board);
         if(humanPlayer == 0){
             this.aiPiece = "p2";
             this.humanPiece = "p1";
@@ -12,8 +11,8 @@ class MinimaxAgent {
         else{
             this.aiPiece = "p1";
             this.humanPiece = "p2";
-        
         }
+        this.getAction(board);
     }
 
     getActions(board) {
@@ -26,10 +25,6 @@ class MinimaxAgent {
         return actions;
     }
 
-    setDepth(d){
-        this.depth = d;
-    }
-
     getAction(board) {
         let actions = this.getActions(board);
         let maxVal = -Infinity;
@@ -38,14 +33,11 @@ class MinimaxAgent {
         for (const action of actions) {
             const boardCopy = board.map((a) => a.slice());
             let val = this.minimax(this.tryMove(action, boardCopy, this.aiPiece), false, -Infinity, Infinity, this.depth);
-            //console.log(val);
-            //console.log(action, val, boardCopy, this.getScore(boardCopy));
             if (maxVal < val) {
                 maxVal = val;
                 maxValAction = action;
             }
         }
-        //console.log(maxVal, maxValAction);
         return maxValAction;
     }
 
@@ -104,10 +96,10 @@ class MinimaxAgent {
 
         if(countN === 4 || (count1 > 0 && count2 > 0)) return {sc:0, three:0};
         if(count1 === 4){
-            return {sc: -10000000000, three: -1};
+            return {sc: -10000000000000000000000, three: -1};
         } 
         if(count2 === 4){
-            return {sc: 100000000000, three: 1};
+            return {sc: 10000000000000000000000, three: 1};
         } 
         if(count1 === 0){
             return {sc: Math.pow(10*count2, count2), three: count2 >= 3 ? 1 : 0};
@@ -156,9 +148,11 @@ class MinimaxAgent {
                 let {sc:sc, three:three} = this.scoreFour2(board[c][r], board[c + 1][r + 1], board[c + 2][r + 2], board[c + 3][r + 3]);
                 score += sc;
                 if(three === 1){
+                    threes_two = threes_two.concat([{row:c, col:r}, {row: c+1, col:r+1}, {row:c+2, col:r+2}, {row: c+3, col:r+3}]);
                     //threes_two = threes_two.concat([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
                 }
                 else if(three ===-1){
+                    threes_one = threes_one.concat([{row:c, col:r}, {row: c+1, col:r+1}, {row:c+2, col:r+2}, {row: c+3, col:r+3}]);
                     //threes_one = threes_one.concat([(c, r), (c+1, r+1), (c+2, r+2), (c+3, r+3)]);
                 }
             }
@@ -169,9 +163,11 @@ class MinimaxAgent {
                 let {sc:sc, three:three} = this.scoreFour2(board[c][r], board[c - 1][r + 1], board[c - 2][r + 2], board[c - 3][r + 3]);
                 score += sc;
                 if(three==1){
+                    threes_two = threes_two.concat([{row:c, col:r}, {row: c-1, col:r+1}, {row:c-2, col:r+2}, {row: c-3, col:r+3}]);
                     //threes_two = threes_two.concat([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
                 }
                 else if(three==-1){
+                    threes_one = threes_one.concat([{row:c, col:r}, {row: c-1, col:r+1}, {row:c-2, col:r+2}, {row: c-3, col:r+3}]);
                    //threes_one = threes_one.concat([(c, r), (c-1, r+1), (c-2, r+2), (c-3, r+3)]);
                 }
             }
@@ -179,24 +175,27 @@ class MinimaxAgent {
         let d2 = this.numDuplicate(threes_two);
         let d1 = this.numDuplicate(threes_one);
         //console.log(d1, d2);
-        //score += 1000 * d2 - 1000 * d1;
+        score += Math.pow(100 * d2, d2 + 2) - Math.pow(100 * d1, d1 + 2);
         return score;
     }
 
     numDuplicate(arr){
-        console.log(arr);
-        let count = {};
+        //console.log(arr);
+        let count = new Set();
         let result = 0;
         for (let ele of arr){
-            if(count[ele]){
-                console.log(ele);
+            let {row, col} = ele;
+            let hash = row * 10 + col;
+            if(count.has(hash)){
+                //console.log(ele, hash);
                 result++;
             }
             else{
-                count[ele] = 1;
+                count.add(hash);
             }
         }
-        console.log(count, result);
+        //console.log(count, result);
+        //if(result > 0) console.log(result);
         return result;
     }
 
