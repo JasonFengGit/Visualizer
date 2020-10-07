@@ -40,7 +40,7 @@ class MinimaxAgent {
             if (maxVal == val && action === 3){
                 maxValAction = action;
             }
-            //console.log(action, val, maxVal, maxValAction);
+            console.log(action, val, maxVal, maxValAction);
         }
         return maxValAction;
     }
@@ -177,7 +177,7 @@ class MinimaxAgent {
         let d2 = this.numDuplicate(threes_two);
         let d1 = this.numDuplicate(threes_one);
         //console.log(d1, d2);
-        score += Math.pow(10 * d2, d2 + 2) - Math.pow(10 * d1, d1 + 2);
+        //score += Math.pow(10 * d2, d2 + 2) - Math.pow(10 * d1, d1 + 2);
         return score;
     }
 
