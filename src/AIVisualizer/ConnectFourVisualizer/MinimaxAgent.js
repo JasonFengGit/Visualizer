@@ -11,7 +11,7 @@ class MinimaxAgent {
             this.aiPiece = "p1";
             this.humanPiece = "p2";
         }
-        console.log(this.depth, this.humanPiece);
+        //console.log(this.depth, this.humanPiece);
         //this.getAction(board);
     }
 
@@ -33,14 +33,14 @@ class MinimaxAgent {
         for (const action of actions) {
             const boardCopy = board.map((a) => a.slice());
             let val = this.minimax(this.tryMove(action, boardCopy, this.aiPiece), false, -Infinity, Infinity, this.depth);
-            if (maxVal < val) {
+            if (maxVal < val || maxValAction === null) {
                 maxVal = val;
                 maxValAction = action;
             }
             if (maxVal == val && action === 3){
                 maxValAction = action;
             }
-            console.log(action, val);
+            //console.log(action, val, maxVal, maxValAction);
         }
         return maxValAction;
     }
@@ -99,10 +99,10 @@ class MinimaxAgent {
         const count2 = this.count(four, this.aiPiece);
         if(countN === 4 || (count1 > 0 && count2 > 0)) return {sc:0, three:0};
         if(count1 === 4){
-            return {sc: -10000000000000000000000, three: -1};
+            return {sc: -Infinity, three: -1};
         } 
         if(count2 === 4){
-            return {sc: 10000000000000000000000, three: 1};
+            return {sc: Infinity, three: 1};
         } 
         if(count1 === 0){
             return {sc: Math.pow(10*count2, count2), three: count2 >= 3 ? 1 : 0};
@@ -177,7 +177,7 @@ class MinimaxAgent {
         let d2 = this.numDuplicate(threes_two);
         let d1 = this.numDuplicate(threes_one);
         //console.log(d1, d2);
-        //score += Math.pow(100 * d2, d2 + 2) - Math.pow(100 * d1, d1 + 2);
+        score += Math.pow(10 * d2, d2 + 2) - Math.pow(10 * d1, d1 + 2);
         return score;
     }
 

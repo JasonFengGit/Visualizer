@@ -110,6 +110,7 @@ export default class ConnectFour extends Component {
     }
 
     handleEnter(colId) {
+        if(this.state.currentPlayer === this.state.aiPlayer) return;
         const boardCopy = this.state.board.map((a) => a.slice());
         boardCopy[colId][0] = this.state.colors[this.state.currentPlayer];
         for (let index = 0; index < boardCopy.length; index++) {
@@ -137,7 +138,11 @@ export default class ConnectFour extends Component {
             let newCol = boardCopy[colId].reverse();
             newCol[newCol.indexOf(null)] = this.state.colors[this.state.currentPlayer];
             newCol.reverse();
-            if (this.state.currentPlayer == this.state.humanPlayer) {
+            
+            if(this.state.depth === 6) {
+                boardCopy[colId][0] = null;
+            }
+            else if (this.state.currentPlayer == this.state.humanPlayer) {
                 boardCopy[colId][0] = this.state.colors[this.state.currentPlayer];
             }
             this.setState({
