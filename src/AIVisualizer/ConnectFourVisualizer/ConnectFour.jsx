@@ -273,7 +273,8 @@ export default class ConnectFour extends Component {
                             and choose the action that it think is best at the current state<br />
                             each time. <br /><br />
                             It is not a perfect player for this game, so try your best to<br />
-                            beat it by your "humanity"! (Depth 6 is quite slow, please wait patiently.)
+                            beat it by your "humanity"! <br/><br/>
+                            (Depth 6 is quite slow, please wait patiently.)
                     </h5>
                     </div>
                 </div>
