@@ -37,8 +37,8 @@ export default class ConnectFour extends Component {
             lastBoards: [],
             colors: ["p1", "p2"],
             winner: null,
-            depth: 3,
-            minimaxAgent: new MinimaxAgent(new Array(7).fill(new Array(7).fill(null)), 3, 0),
+            depth: 4,
+            minimaxAgent: new MinimaxAgent(4, 0),
         };
         this.reset = this.reset.bind(this);
         this.props.getFunctions(() => { }, this.reset);
@@ -55,7 +55,6 @@ export default class ConnectFour extends Component {
     }
 
     undo() {
-        console.log(this.state);
         if (this.state.lastBoards.length) {
             this.setState({
                 board: this.state.lastBoards.pop(),
@@ -71,7 +70,7 @@ export default class ConnectFour extends Component {
                 aiPlayer: 1,
                 humanPlayer: 0,
                 humanPiece: "p1",
-                minimaxAgent: new MinimaxAgent(new Array(7).fill(new Array(7).fill(null)), 3, 0),
+                minimaxAgent: new MinimaxAgent(this.state.depth, 0),
             });
         }
         else {
@@ -79,33 +78,35 @@ export default class ConnectFour extends Component {
                 aiPlayer: 0,
                 humanPlayer: 1,
                 humanPiece: "p2",
-                minimaxAgent: new MinimaxAgent(new Array(7).fill(new Array(7).fill(null)), 3, 1),
+                minimaxAgent: new MinimaxAgent(this.state.depth, 1),
             });
         }
         this.reset();
     }
 
     setDepth(d) {
-        if(d !== this.state.depth){
-            this.setState({ depth: d, minimaxAgent: new MinimaxAgent(new Array(7).fill(new Array(7).fill(null)), d, this.state.humanPlayer)});
-        }
+        this.setState({ depth: d, minimaxAgent: new MinimaxAgent(d, this.state.humanPlayer)});
     }
 
     handleClick(colId) {
-        if (!this.state.winner) {
+        if(this.state.currentPlayer === this.state.aiPlayer) return;
+        if(!this.state.winner) {
             this.state.lastBoards.push(this.state.board.map((a) => a.slice()));
             this.move(colId);
         }
     }
 
     AITakeMove() {
+        
         if (checkWinner(this.state.board) === null && this.state.currentPlayer == this.state.aiPlayer) {
+
             const boardCopy = this.state.board.map((a) => a.slice());
             const action = this.state.minimaxAgent.getAction(boardCopy);
 
             this.move(action);
-
         }
+        
+        
     }
 
     handleEnter(colId) {
@@ -144,6 +145,7 @@ export default class ConnectFour extends Component {
                 board: boardCopy,
             });
         }
+        
     }
 
     componentDidMount() {
@@ -165,10 +167,12 @@ export default class ConnectFour extends Component {
                 board: boardCopy,
             })
         }
-        this.AITakeMove();
+        //while(true){let a=1}
+        setTimeout(()=> this.AITakeMove(), 200);
     }
 
     render() {
+        //console.log(1, this.state.currentPlayer, this.state.board.map((a) => a.slice()));
         let buttons =
             <><button
                 style={{ position: "absolute", marginTop: "460px", marginLeft: "100px", height: "30px", width: "130px" }}
@@ -191,9 +195,9 @@ export default class ConnectFour extends Component {
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li>
-                            <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setDepth(3)}><p style={{ "margin-top": "-5px" }}>{`Depth: 3`}</p></button>
+                            <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setDepth(2)}><p style={{ "margin-top": "-5px" }}>{`Depth: 2`}</p></button>
                             <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setDepth(4)}><p style={{ "margin-top": "-5px" }}>{`Depth: 4`}</p></button>
-                            <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setDepth(5)}><p style={{ "margin-top": "-5px" }}>{`Depth: 5`}</p></button>
+                            <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setDepth(6)}><p style={{ "margin-top": "-5px" }}>{`Depth: 6`}</p></button>
                         </li>
                     </div>
                 </div></>
@@ -234,7 +238,16 @@ export default class ConnectFour extends Component {
                 finished={false}
             ></Col>
         );
-
+        
+        if(this.state.currentPlayer === this.state.aiPlayer){
+            let loadingImg = document.getElementById("loadingImgT");
+            if(loadingImg) loadingImg.className = 'loadingImgN';
+        }
+        else{
+            let loadingImg = document.getElementById("loadingImgT");
+            if(loadingImg) loadingImg.className = 'loadingImgT';
+            
+        }
         return (
             <div>
                 <div className="game">
@@ -243,18 +256,19 @@ export default class ConnectFour extends Component {
                     </div>
 
                     {buttons}
+                    <img id="loadingImgT" className="loadingImgT" src="https://linkpicture.com/q/Double-Ring-1s-200px-2.gif" height="100px" width="100px" style={{marginLeft: "10px", position: "absolute", zIndex:0}}></img>;
                     <div>
                         <h5 class="connectFourDes" style={{ position: "absolute", marginTop: "160px", marginLeft: "30px", textAlign: "left" }}>
                             This is a chess game known as "Connect Four", which you<br />
-                        will need to connect four pieces to win (accept diagonals). <br />
-                        The game has "gravity", so wherever you put the pieces, <br />
-                        they would "drop" down to the bottom.<br /><br />
-                        You are competing with a "Minimax" AI with alpha-beta pruning.<br />
-                        Basically, it will search possible future states of the game<br />
-                        and choose the action that it think is best at the current state<br />
-                        each time. <br /><br />
-                        It is not a perfect player for this game, so try your best to<br />
-                        beat it by your "humanity"!
+                            will need to connect four pieces to win (accept diagonals). <br />
+                            The game has "gravity", so wherever you put the pieces, <br />
+                            they would "drop" down to the bottom.<br /><br />
+                            You are competing with a "Minimax" AI with alpha-beta pruning.<br />
+                            Basically, it will search possible future states of the game<br />
+                            and choose the action that it think is best at the current state<br />
+                            each time. <br /><br />
+                            It is not a perfect player for this game, so try your best to<br />
+                            beat it by your "humanity"!
                     </h5>
                     </div>
                 </div>

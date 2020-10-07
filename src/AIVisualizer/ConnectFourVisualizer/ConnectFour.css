@@ -86,9 +86,9 @@
     width: 47px;
     height: 47px;
     border-radius: 10px;
-    background-color: #d1d1d1;
+    background-color:  #f0bb58;
     animation-name: p1animation;
-    animation-duration: 0.5s;
+    animation-duration: 0.2s;
     animation-timing-function: ease-out;
     animation-delay: 0s;
     animation-direction: alternate;
@@ -129,7 +129,7 @@
     border-radius: 10px;
     background-color: #d1d1d1;
     animation-name: p2animation;
-    animation-duration: 0.5s;
+    animation-duration: 0.2s;
     animation-timing-function: ease-out;
     animation-delay: 0s;
     animation-direction: alternate;
@@ -176,4 +176,12 @@
     0%{
         color: white;
     }
+}
+
+.loadingImgN{
+    margin-top: 19%;
+}
+
+.loadingImgT{
+    margin-top: -30%;
 }
