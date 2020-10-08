@@ -3,20 +3,6 @@
   height: 25px;
   outline: 1px solid rgb(175, 174, 174);
   display: inline-block;
-  animation-name: nodeAnimation;
-  animation-duration: 5s;
-  animation-timing-function: ease-out;
-  animation-delay: 0;
-  animation-direction: alternate;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-play-state: running;
-}
-
-@keyframes nodeAnimation{
-  100%{
-    /*background-color: white;*/
-  }
 }
 
 .node-finish {
@@ -117,7 +103,7 @@
     border-radius: 100%;
   }
   50% {
-    outline: 0px;
+    outline: 0;
     background-color: rgba(12, 37, 180, 0.75);
   }
 
