@@ -4,6 +4,9 @@ import { Stage, Layer, Rect, Line, Circle, Text } from 'react-konva';
 import { Perceptron, random } from './Perceptron';
 import './PtronVisualizer.css';
 
+/**
+ * class definition of PtronVisualizer Class
+ */
 export default class PtronVisualizer extends Component {
     constructor(props) {
         super(props);
@@ -26,10 +29,23 @@ export default class PtronVisualizer extends Component {
         this.props.getFunctions(this.startVisualizer, this.resetVisualizer);
     }
 
+    /**
+     * @param {*} x 
+     * @returns exact value of the origin function
+     */
     f(x) {
         return this.state.M * x + this.state.B;
     }
 
+    /**
+     * map the value n from a range [as, ae] to [bs, be]
+     * @param {*} n 
+     * @param {*} as 
+     * @param {*} ae 
+     * @param {*} bs 
+     * @param {*} be 
+     * @returns the mapped value
+     */
     map(n, as, ae, bs, be) {
         return ((n - as) / (ae - as)) * (be - bs) + bs;
     }
@@ -72,6 +88,9 @@ export default class PtronVisualizer extends Component {
 
     }
 
+    /**
+     * render the scene using Konva
+     */
     render() {
         if (this.state.count === 0) {
             this.initialize();
@@ -104,8 +123,7 @@ export default class PtronVisualizer extends Component {
             let y = this.map(this.state.training[i].input[1], min, max, this.state.height, 0);
             if(i%4>0) points.push({ x: x, y: y, fill: guess < 0 });
         }
-        let xOff = this.state.xOff;
-        let yOff = this.state.yOff;
+        
         let aM = -weights[0] / weights[1];
         let aB = -weights[2] / weights[1];
         let eM = aM - this.state.M;

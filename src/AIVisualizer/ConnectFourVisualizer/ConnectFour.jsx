@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import MinimaxAgent from './MinimaxAgent';
 import "./ConnectFour.css"
 
+/**
+ * @param {*} props 
+ * @returns Picec Object
+ */
 function Piece(props) {
     return (
         <div className={props.id === 0 ? "virtual-piece" : "piece"}>
             <div
                 className={(props.id === 0 ? "v" : "") + `${props.val}` + (props.finished && props.val !== null ? "finished" : "")}
-
             ></div>
         </div>
     );
 }
 
+/**
+ * @param {*} props 
+ * @returns Col Object
+ */
 function Col(props) {
     return (
         <div
@@ -25,11 +32,14 @@ function Col(props) {
     );
 }
 
+/**
+ * definition of ConnectFour Class
+ */
 export default class ConnectFour extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPlayer: 0, // player 1 goes first
+            currentPlayer: 0,
             aiPlayer: 1,
             humanPlayer: 0,
             humanPiece: "p1",
@@ -46,7 +56,7 @@ export default class ConnectFour extends Component {
 
     reset() {
         this.setState({
-            currentPlayer: 0, // player 1 goes first
+            currentPlayer: 0,
             board: new Array(7).fill(new Array(7).fill(null)),
             lastBoards: [],
             colors: ["p1", "p2"],
@@ -85,32 +95,27 @@ export default class ConnectFour extends Component {
     }
 
     setDepth(d) {
-        this.setState({ depth: d, minimaxAgent: new MinimaxAgent(d, this.state.humanPlayer)});
+        this.setState({ depth: d, minimaxAgent: new MinimaxAgent(d, this.state.humanPlayer) });
     }
 
     handleClick(colId) {
-        if(this.state.currentPlayer === this.state.aiPlayer) return;
-        if(!this.state.winner) {
+        if (this.state.currentPlayer === this.state.aiPlayer) return;
+        if (!this.state.winner) {
             this.state.lastBoards.push(this.state.board.map((a) => a.slice()));
             this.move(colId);
         }
     }
 
     AITakeMove() {
-        
         if (checkWinner(this.state.board) === null && this.state.currentPlayer == this.state.aiPlayer) {
-
             const boardCopy = this.state.board.map((a) => a.slice());
             const action = this.state.minimaxAgent.getAction(boardCopy);
-
             this.move(action);
         }
-        
-        
     }
 
     handleEnter(colId) {
-        if(this.state.currentPlayer === this.state.aiPlayer) return;
+        if (this.state.currentPlayer === this.state.aiPlayer) return;
         const boardCopy = this.state.board.map((a) => a.slice());
         boardCopy[colId][0] = this.state.colors[this.state.currentPlayer];
         for (let index = 0; index < boardCopy.length; index++) {
@@ -138,8 +143,8 @@ export default class ConnectFour extends Component {
             let newCol = boardCopy[colId].reverse();
             newCol[newCol.indexOf(null)] = this.state.colors[this.state.currentPlayer];
             newCol.reverse();
-            
-            if(this.state.depth === 6) {
+
+            if (this.state.depth === 6) {
                 boardCopy[colId][0] = null;
             }
             else if (this.state.currentPlayer == this.state.humanPlayer) {
@@ -150,7 +155,7 @@ export default class ConnectFour extends Component {
                 board: boardCopy,
             });
         }
-        
+
     }
 
     componentDidMount() {
@@ -172,20 +177,19 @@ export default class ConnectFour extends Component {
                 board: boardCopy,
             })
         }
-        //while(true){let a=1}
-        setTimeout(()=> this.AITakeMove(), 200);
+        setTimeout(() => this.AITakeMove(), 200);
     }
 
     render() {
-        //console.log(1, this.state.currentPlayer, this.state.board.map((a) => a.slice()));
         let buttons =
-            <><button
-                style={{ position: "absolute", marginTop: "460px", marginLeft: "100px", height: "30px", width: "130px" }}
-                onClick={() => this.setStartingPlayer(this.state.aiPlayer === 1 ? "ai" : "human")}
-                type="button"
-                class="btn btn-outline-dark">
-                <p style={{ "margin-top": "-5px" }}>{`offensive: ${this.state.aiPlayer === 1 ? "you" : "ai"}`}</p>
-            </button>
+            <>
+                <button
+                    style={{ position: "absolute", marginTop: "460px", marginLeft: "100px", height: "30px", width: "130px" }}
+                    onClick={() => this.setStartingPlayer(this.state.aiPlayer === 1 ? "ai" : "human")}
+                    type="button"
+                    class="btn btn-outline-dark">
+                    <p style={{ "margin-top": "-5px" }}>{`offensive: ${this.state.aiPlayer === 1 ? "you" : "ai"}`}</p>
+                </button>
 
                 <button
                     style={{ position: "absolute", marginTop: "460px", marginLeft: "240px", height: "30px", width: "100px" }}
@@ -205,7 +209,9 @@ export default class ConnectFour extends Component {
                             <button type="button" class="btn btn-light navbtn" style={{ height: "30px" }} onClick={() => this.setDepth(6)}><p style={{ "margin-top": "-5px" }}>{`Depth: 6`}</p></button>
                         </li>
                     </div>
-                </div></>
+                </div>
+            </>
+
         if (this.state.winner) {
             let cols = [...Array(this.state.board.length)].map((x, y) =>
                 <Col
@@ -217,6 +223,7 @@ export default class ConnectFour extends Component {
                     finished={true}
                 ></Col>
             );
+
             return (
                 <div>
                     <div className="game">
@@ -243,15 +250,15 @@ export default class ConnectFour extends Component {
                 finished={false}
             ></Col>
         );
-        
-        if(this.state.currentPlayer === this.state.aiPlayer){
+
+        if (this.state.currentPlayer === this.state.aiPlayer) {
             let loadingImg = document.getElementById("loadingImgT");
-            if(loadingImg) loadingImg.className = 'loadingImgN';
+            if (loadingImg) loadingImg.className = 'loadingImgN';
         }
-        else{
+        else {
             let loadingImg = document.getElementById("loadingImgT");
-            if(loadingImg) loadingImg.className = 'loadingImgT';
-            
+            if (loadingImg) loadingImg.className = 'loadingImgT';
+
         }
         return (
             <div>
@@ -261,7 +268,7 @@ export default class ConnectFour extends Component {
                     </div>
 
                     {buttons}
-                    <img id="loadingImgT" className="loadingImgT" src="https://linkpicture.com/q/Double-Ring-1s-200px-2.gif" height="100px" width="100px" style={{marginLeft: "10px", position: "absolute", zIndex:0}}></img>;
+                    <img id="loadingImgT" className="loadingImgT" src="https://linkpicture.com/q/Double-Ring-1s-200px-2.gif" height="100px" width="100px" style={{ marginLeft: "10px", position: "absolute", zIndex: 0 }}></img>;
                     <div>
                         <h5 class="connectFourDes" style={{ position: "absolute", marginTop: "160px", marginLeft: "30px", textAlign: "left" }}>
                             This is a chess game known as "Connect Four", which you<br />
@@ -273,7 +280,7 @@ export default class ConnectFour extends Component {
                             and choose the action that it think is best at the current state<br />
                             each time. <br /><br />
                             It is not a perfect player for this game, so try your best to<br />
-                            beat it by your "humanity"! <br/><br/>
+                            beat it by your "humanity"! <br /><br />
                             (Depth 6 is quite slow, please wait patiently.)
                     </h5>
                     </div>
@@ -283,10 +290,21 @@ export default class ConnectFour extends Component {
     }
 }
 
+/**
+ * @param {*} a 
+ * @param {*} b 
+ * @param {*} c 
+ * @param {*} d 
+ * @returns whether all four pieces are the same
+ */
 function checkFour(a, b, c, d) {
     return ((a !== null) && (a === b) && (a === c) && (a === d));
 }
 
+/**
+ * @param {*} board 
+ * @returns the winner if there is a winner, null otherwise.
+ */
 function checkWinner(board) {
     for (let c = 0; c < 7; c++) {
         for (let r = 1; r < 5; r++) {

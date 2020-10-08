@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import SnakeNode from './SnakeNode/SnakeNode';
 
+// under construction
+
+
 export default class NNSnakeVisualizer extends Component{
     constructor(props){
         super(props);
