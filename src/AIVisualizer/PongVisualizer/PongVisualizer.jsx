@@ -97,7 +97,7 @@ export default class PongVisualizer extends Component {
     }
 
     getState() {
-        const { dots: dots, x: x, y: y, panelx: px, vx: vx, vy: vy } = this.state;
+        const { dots, x, y, panelx: px, vx, vy } = this.state;
         return { dots: dots, x: x, y: y, px: px, vx: vx, vy: vy, terminal: this.state.score === 500 || this.state.finished };
     }
 
@@ -108,7 +108,7 @@ export default class PongVisualizer extends Component {
 
     updateBall() {
         if (this.state.finished) return;
-        let { x: x, y: y, r: r, vx: vx, vy: vy, panelx: panelx } = this.state;
+        let { x, y, r, vx, vy, panelx } = this.state;
         if (x == 0 && y == 0) return;
         x = x + vx;
         y = y + vy;
@@ -264,7 +264,7 @@ export default class PongVisualizer extends Component {
                 };
             }
         }
-        const { x: x, y: y } = this.state;
+        const { x, y } = this.state;
         const dots = this.state.dots;
 
 

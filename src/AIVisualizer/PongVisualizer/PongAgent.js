@@ -52,7 +52,7 @@ class PongAgent {
      * @returns the features at the state after taking the action
      */
     getFeatures(state, action) {
-        let { dots: dots, x: x, y: y, px: px, vx: vx, vy: vy, terminal: terminal } = state;
+        let { dots, x, y, px, vx, vy, terminal } = state;
         px = px + this.getMove(action) + 50;
         let features = {
             "min_dis_to_dot": 0,
