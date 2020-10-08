@@ -1,6 +1,6 @@
 ## Visualizer
 [![CodeFactor](https://www.codefactor.io/repository/github/jasonfenggit/visualizer/badge)](https://www.codefactor.io/repository/github/jasonfenggit/visualizer)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/JasonFengGit/Visualizer)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/JasonFengGit/Visualizer/blob/master/LICENSE)
 
 
