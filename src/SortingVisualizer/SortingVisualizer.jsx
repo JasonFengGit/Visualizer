@@ -55,7 +55,6 @@ export default class SortingVisualizer extends Component {
         }
 
         for (let i = 0; i < this.state.numPiles; i++) {
-            //swap i and j
             let j = getRandomInt(0, i);
             let temp = piles[i];
             piles[i] = piles[j];

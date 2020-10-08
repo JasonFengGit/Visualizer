@@ -42,29 +42,6 @@ function DFS(grid, start, finish) {
 }
 
 function BFS(grid, start, finish) {
-    /*
-    let nodes = [];
-    start.distance = 0;
-    nodes.push(start);
-    console.log(nodes, start);
-    const visitedInOrder = [];
-    let count = 0;
-    let visited = [];
-    while (nodes.length && count < 1000) {
-        const cur = nodes.shift();
-        const { row: row, col: col } = cur;
-        visited.push({ row: row, col: col });
-        if (cur.isFinish) return visitedInOrder;
-        if (cur.isWall) continue;
-
-        visitedInOrder.push(cur);
-        const neighbors = getUnvisitedNeighbors(cur, grid, visited);
-        console.log(visitedInOrder, neighbors.length, count);
-        console.log(visited.slice());
-        nodes = nodes.concat(neighbors);
-        count += 1;
-    }
-    return visitedInOrder;*/
     const visitedInOrder = [];
     let unvisited = [];
     unvisited.push(start);
@@ -83,16 +60,6 @@ function BFS(grid, start, finish) {
     }
 
     return visitedInOrder;
-}
-
-function visitedTest(visited, ele) {
-    const { row: row, col: col } = ele;
-    for (let i = 0; i < visited.length; i++) {
-        const { row: r, col: c } = visited[i];
-        if (r === row && c == col) return true;
-
-    }
-    return false;
 }
 
 function getUNeighbors(node, grid) {
@@ -207,14 +174,6 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function deepCopy(maze) {
-    let cMaze = [];
-    for (let row = 0; row < maze.length; row++) {
-        cMaze.push(maze[row].slice());
-    }
-    return cMaze;
-}
-
 function primMaze(grid) {
     let sr = 7, sc = 17; // set a starting point for generating maze
     let height = grid.length, width = grid[0].length;
@@ -305,14 +264,6 @@ function connect(grid, a, b) {
     makeWall(grid, row, col, false);
 }
 
-function recursiveDivisionMaze(grid) {
-    let height = grid.length, width = grid[0].length;
-
-    recursiveDivision(grid, width, height, 0, 0, 0);
-
-}
-
-
 function makeWall(grid, row, col, isW) {
     const node = grid[row][col];
     const newNode = {
@@ -322,39 +273,4 @@ function makeWall(grid, row, col, isW) {
     grid[row][col] = newNode;
 }
 
-function buildWall(grid, width, height, xo, yo, wallId, horizontal) {
-    if (horizontal) {
-        for (let i = xo + 1; i < width - 1; i++) {
-            makeWall(grid, wallId, i, true);
-        }
-    }
-    else {
-        for (let i = yo + 1; i < height - 1; i++) {
-            makeWall(grid, i, wallId, true);
-        }
-    }
-}
-
-function recursiveDivision(grid, width, height, xo, yo, count) {
-    if (width - xo < 2 || height - yo < 2) {
-        return;
-    }
-    let horizontal = randomInt(0, 1) == 0;
-    let wallId = randomInt(horizontal ? yo : xo, horizontal ? height - 1 : width - 1);
-    buildWall(grid, width, height, xo, yo, wallId, horizontal);
-
-    let pathId = randomInt(!horizontal ? yo : xo, !horizontal ? height - 1 : width - 1);
-
-    if (horizontal) {
-        makeWall(grid, wallId, pathId, false);
-        recursiveDivision(grid, width, wallId - 1, xo, yo, count + 1);
-        recursiveDivision(grid, width, height, xo, wallId, count + 1);
-    }
-    else {
-        makeWall(grid, pathId, wallId, false);
-        recursiveDivision(grid, wallId - 1, height, xo, yo, count + 1);
-        recursiveDivision(grid, width, height, wallId, yo, count + 1);
-    }
-}
-
-export { dijkstra, BFS, DFS, AStar, getShortestPath, recursiveDivisionMaze, primMaze };
+export { dijkstra, BFS, DFS, AStar, getShortestPath, primMaze };

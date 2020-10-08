@@ -73,7 +73,6 @@ function merge(piles, start, mid, end, statesInOrder) {
     let k = start, i = start, j = mid + 1;
     let pilesC = piles.slice();
     while (i <= mid && j <= end) {
-        //let changing = [i, j, k];
         if (pilesC[i] <= pilesC[j]) {
             piles[k++] = pilesC[i++];
         }
