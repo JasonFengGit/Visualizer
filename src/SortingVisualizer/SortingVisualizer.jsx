@@ -80,7 +80,7 @@ export default class SortingVisualizer extends Component {
 
         const statesInOrder = this.state.sortingAlgorithms[this.state.currentAlgorithm](piles);
         for (let i = 0; i < statesInOrder.length; i++) {
-            const { piles: state, changing: changingPiles, pivot: pivot } = statesInOrder[i];
+            const { piles: state, changing: changingPiles, pivot } = statesInOrder[i];
             setTimeout(() => {
                 this.setState({ piles: state, changingPiles: changingPiles, pivot: pivot });
             }, this.state.pileDelayTimes[this.state.currentAlgorithm] * i);
