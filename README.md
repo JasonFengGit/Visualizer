@@ -1,4 +1,5 @@
 ## Visualizer
+[![CodeFactor](https://www.codefactor.io/repository/github/jasonfenggit/visualizer/badge)](https://www.codefactor.io/repository/github/jasonfenggit/visualizer)
 
 This project is developed with React to help people to view algorithmic processes intuitively and entertainingly. <br/>
 You may visit the page at <a href="https://jasonfenggit.github.io/Visualizer/">jasonfenggit.github.io/Visualizer/</a> with Chrome.
