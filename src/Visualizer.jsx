@@ -4,7 +4,6 @@ import PathFindingVisualizer from './PathFindingVisualizer/PathFindingVisualizer
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
 import './Visualizer.css'
 import AIVisualizer from './AIVisualizer/AIVisualizer';
-import { Link } from 'react-router-dom';
 
 export default class Visualizer extends Component {
     constructor(props) {
@@ -31,13 +30,11 @@ export default class Visualizer extends Component {
     }
 
     getFunctions(go, reset, setAlgo, algorithms) {
-        //console.log(go);
         this.state.goFunction = go;
         this.state.resetFunction = reset;
         this.state.setAlgorithm = setAlgo;
         this.state.algorithms = algorithms;
         this.setState({ algorithms: algorithms });
-        //this.state.goFunction();
     }
 
     render() {
@@ -54,19 +51,19 @@ export default class Visualizer extends Component {
         else {
             renderObj =
                 <div class="welbotron">
-                    
+
                     <div class="container welc">
-                        
+
                         <h1 class='welcome'>Hello, algorithms.
                             <p class="quote">
-                                <TextLoop interval={3800} springConfig={{ stiffness: 200}} adjustingSpeed={300} >
-                                        <p class="quoteText">"An algorithm must be seen to be believed."</p>
-                                        <p class="quoteText">"Algorithms are central objects of study in Computer Science."</p>
-                                        <p class="quoteText">"Algorithms are apprehensible magics."</p>
-                                        <p class="quoteText">"An algorithm is like a recipe."</p>
+                                <TextLoop interval={3800} springConfig={{ stiffness: 200 }} adjustingSpeed={300} >
+                                    <p class="quoteText">"An algorithm must be seen to be believed."</p>
+                                    <p class="quoteText">"Algorithms are central objects of study in Computer Science."</p>
+                                    <p class="quoteText">"Algorithms are apprehensible magics."</p>
+                                    <p class="quoteText">"An algorithm is like a recipe."</p>
                                 </TextLoop>
                             </p>
-                            
+
                             <p class="lead">This website might help you understand algorithms better by visualizing them.</p>
                             <p class="secondline lead">Click on one of the categories below to visualize algorithms.</p>
 
@@ -90,7 +87,7 @@ export default class Visualizer extends Component {
                         </a>
                         <a href='' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true});
+                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true });
                             }
                         }} data-toggle={this.state.AIClicked ? "" : "modal"} data-target="#aiIntroModal">
                             <span></span>
@@ -103,9 +100,8 @@ export default class Visualizer extends Component {
         if (this.state.mode === 'main') invisibleOrNot = ' invisible';
         let algorithms = this.state.algorithms;
         return (
-            <>  
-                    
-                    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-dark">
+            <>
+                <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-dark">
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
@@ -115,6 +111,7 @@ export default class Visualizer extends Component {
                         type="button" class="btn btn-dark navbtn"
                         disabled={this.state.rendering}
                     >Main</button>
+
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
@@ -122,10 +119,11 @@ export default class Visualizer extends Component {
                                 this.state.setAlgorithm(-1);
                             }
                         }}
-                        type="button" class="btn btn-dark navbtn" 
+                        type="button" class="btn btn-dark navbtn"
                         data-toggle={this.state.pathClicked ? "" : "modal"} data-target="#pathIntroModal"
                         disabled={this.state.rendering}
                     >Pathfinding</button>
+
                     <button
                         onClick={() => {
                             if (!this.state.rendering) {
@@ -133,15 +131,16 @@ export default class Visualizer extends Component {
                                 this.state.setAlgorithm(-1);
                             }
                         }}
-                        type="button" class="btn btn-dark navbtn" 
+                        type="button" class="btn btn-dark navbtn"
                         data-toggle={this.state.sortingClicked ? "" : "modal"} data-target="#sortingIntroModal"
                         disabled={this.state.rendering}
                     >Sorting</button>
+
                     <button
                         onClick={() => {
-                            
+
                             if (!this.state.rendering) {
-                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true});
+                                this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true });
                                 this.state.setAlgorithm(-1);
                             }
                         }}
@@ -149,17 +148,7 @@ export default class Visualizer extends Component {
                         data-toggle={this.state.AIClicked ? "" : "modal"} data-target="#aiIntroModal"
                         disabled={this.state.rendering}
                     >AI</button>
-                    <div class={"dropdown" + invisibleOrNot}>
-                        <button class="btn btn-light dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
-                            Actions
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()} data-toggle={this.state.currentAlgorithm === null ? "modal" : ""} data-target="#setAlgoModal" disabled={this.state.mode === "ai" && this.state.currentAlgorithm === "Minimax"}>Go!</button>
-                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.resetFunction()}>Reset</button>
-                            </li>
-                        </div>
-                    </div>
+
                     <div class={"dropdown" + invisibleOrNot}>
                         <button class="btn btn-secondary dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
                             {this.state.currentAlgorithm == null ? 'Algorithms' : this.state.currentAlgorithm}
@@ -177,11 +166,24 @@ export default class Visualizer extends Component {
                             </li>
                         </div>
                     </div>
-                    <a href="https://github.com/JasonFengGit" style={{marginLeft: "32%"}}>
-                        <img class="githubimg" src="https://www.linkpicture.com/q/UIHere_1.png" width="40px" height="40px" style={{opacity:"0.7 !important"}}></img>
+
+                    <div class={"dropdown" + invisibleOrNot}>
+                        <button class="btn btn-light dropdown-toggle navbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled={this.state.rendering}>
+                            Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.goFunction()} data-toggle={this.state.currentAlgorithm === null ? "modal" : ""} data-target="#setAlgoModal" disabled={this.state.mode === "ai" && this.state.currentAlgorithm === "Minimax"}>Go!</button>
+                                <button type="button" class="btn btn-light navbtn" onClick={() => this.state.resetFunction()}>Reset</button>
+                            </li>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/JasonFengGit" style={{ marginLeft: "32%" }}>
+                        <img class="githubimg" src="https://www.linkpicture.com/q/UIHere_1.png" width="40px" height="40px" style={{ opacity: "0.7 !important" }}></img>
                     </a>
                 </nav>
-                
+
                 <div class="modal fade" id="setAlgoModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -201,6 +203,7 @@ export default class Visualizer extends Component {
 
                     </div>
                 </div>
+
                 <div class="modal fade" id="pathIntroModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content intro">
@@ -226,7 +229,7 @@ export default class Visualizer extends Component {
                                 <p>You may drag the START and TARGET icons to change their positions, and click on the blank nodes to add Walls.</p>
 
                                 <p>Now please choose a sorting algorithm and visualize it!</p>
-                                <p class='tips'>(after choosing an algorithm, click on the [Actions] button.)</p><br/>
+                                <p class='tips'>(after choosing an algorithm, click on the [Actions] button.)</p><br />
                                 <p class='tips'>Note: there could be multiple "best" paths, so paths generated by different algorithms may not be consistent.</p>
                             </div>
                             <div class="modal-footer">
@@ -236,6 +239,7 @@ export default class Visualizer extends Component {
 
                     </div>
                 </div>
+
                 <div class="modal fade" id="sortingIntroModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content intro">
@@ -261,10 +265,9 @@ export default class Visualizer extends Component {
                                 <button type="button" class="btn btn-dark" data-dismiss="modal" style={{ width: '100px' }}>OK</button>
                             </div>
                         </div>
-
                     </div>
-                    
                 </div>
+
                 <div class="modal fade" id="aiIntroModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content intro">
@@ -277,12 +280,12 @@ export default class Visualizer extends Component {
                             <div class="modal-body intro">
                                 <p>
                                     Artificial intelligence (AI) is intelligence demonstrated by machines.
-                                    Leading textbooks define the field as the study of "intelligent agents": 
-                                    any device that perceives its environment and takes actions that maximize its 
+                                    Leading textbooks define the field as the study of "intelligent agents":
+                                    any device that perceives its environment and takes actions that maximize its
                                     chance of successfully achieving its goals.
                                 </p>
                                 <p>
-                                    In this category, you will experience with powerful AI algorithms 
+                                    In this category, you will experience with powerful AI algorithms
                                     based on fundamental ideas. Please try to understand those ideas behind through the visualizations,
                                     and I would try my best to demonstrate those principles.
                                 </p>
@@ -292,13 +295,11 @@ export default class Visualizer extends Component {
                                 <button type="button" class="btn btn-dark" data-dismiss="modal" style={{ width: '100px' }}>OK</button>
                             </div>
                         </div>
-
                     </div>
-                    
                 </div>
+
                 <div>
                     {renderObj}
-                    
                 </div>
             </>
         )

@@ -1,8 +1,16 @@
-
+/**
+ * @param {*} p 
+ * @returns true at a probability of p
+ */
 function flipCoin(p) {
     return Math.random() < p;
 }
 
+/**
+ * @param {*} a 
+ * @param {*} b 
+ * @returns Euclidean distance between a and b
+ */
 function distance(a, b) {
     let { x: ax, y: ay } = a;
     let { x: bx, y: by } = b;
@@ -38,11 +46,14 @@ class PongAgent {
         return minDis;
     }
 
+    /**
+     * @param {*} state 
+     * @param {*} action 
+     * @returns the features at the state after taking the action
+     */
     getFeatures(state, action) {
         let { dots: dots, x: x, y: y, px: px, vx: vx, vy: vy, terminal: terminal } = state;
-        //console.log(px);
         px = px + this.getMove(action) + 50;
-        //console.log(px, this.getMove(action));
         let features = {
             "min_dis_to_dot": 0,
             "dis_to_panel": 0,
@@ -54,27 +65,37 @@ class PongAgent {
         return features;
     }
 
+    /**
+     * @param {*} state 
+     * @param {*} action 
+     * @returns the Q value of the state after taking the action
+     */
     getQ(state, action) {
         if (!state) {
             return 0;
         }
         let result = 0;
-        const features = this.getFeatures(state, action)
-        ////
+        const features = this.getFeatures(state, action);
         for (const feature of this.featureList) {
             result += this.weights[feature] * features[feature];
         }
         return result;
     }
 
+    /**
+     * update weights based on rewards.
+     * @param {*} state 
+     * @param {*} action 
+     * @param {*} nextState 
+     * @param {*} reward 
+     */
     update(state, action, nextState, reward) {
         if (!action) {
             return;
         }
         const features = this.getFeatures(state, action)
         const diff = reward + this.discount * this.getValue(nextState) - this.getQ(state, action);
-        /////
-        //console.log(this.weights);
+        
         for (const feature of this.featureList) {
             this.weights[feature] += this.alpha * diff * features[feature];
         }
@@ -88,6 +109,11 @@ class PongAgent {
         return [-1, 0, 1];
     }
 
+    /**
+     * choose the "best" action at a probability of (1-epsilon) and a random action at a probability of (epsilon)
+     * @param {*} state 
+     * @returns selected action
+     */
     getAction(state) {
         if (state["terminal"] === true) return null;
         const curActions = this.actions();
@@ -102,6 +128,10 @@ class PongAgent {
 
     }
 
+    /**
+     * @param {*} state 
+     * @returns the action with maximum utility
+     */
     getPolicy(state) {
         const curActions = this.actions();
         let reAction = null;

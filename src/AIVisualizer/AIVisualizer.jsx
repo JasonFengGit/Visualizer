@@ -51,21 +51,14 @@ export default class AIVisualizer extends Component {
         let renderObj;
         switch (this.state.currentAlgorithm) {
             case -1:
-                renderObj = <div>
-                <div class="textcontainer">
-                    <div class="typewriter"><h1>Welcome to the Future.</h1></div>
-                </div>
-                <div id="large-header" class="large-header" style={{marginTop: "-18em"}}>
-                    <canvas id="demo-canvas"></canvas>
-                </div>
-                {/*
-                <div id="space">
-                  <div class="stars"></div>
-                  <div class="stars"></div>
-                  <div class="stars"></div>
-                  <div class="stars"></div>
-                  <div class="stars"></div>
-                </div>*/}
+                renderObj = 
+                <div>
+                    <div class="textcontainer">
+                        <div class="typewriter"><h1>Welcome to the Future.</h1></div>
+                    </div>
+                    <div id="large-header" class="large-header" style={{marginTop: "-18em"}}>
+                        <canvas id="demo-canvas"></canvas>
+                    </div>
                 </div>
                 break;
             case 0:

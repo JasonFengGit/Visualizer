@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Stage, Layer, Rect, Line, Konva, Circle, Text } from 'react-konva';
 import PongAgent from "./PongAgent.js";
 import "./PongVisualizer.css";
-/*
-This section is a simple pong game controlled by Apporximate Q Learning Agent
-*/
+
+/**
+ * definition of PongVisualizer Class
+ */
 export default class PongVisualizer extends Component {
     constructor(props) {
         super(props);
@@ -27,19 +28,12 @@ export default class PongVisualizer extends Component {
             score: 0,
             pressedLeft: false,
             pressedRight: false,
-            humanMode: false,
             finished: false,
             gameCount: -1,
             agent: new PongAgent(3, 0.9, 0.2, 0.2),
             notStarted: true,
         }
-        this.setReleased = this.setReleased.bind(this);
-        this.setPressed = this.setPressed.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        if (this.state.humanMode) {
-            document.addEventListener('keydown', (evt) => { this.setPressed(evt) });
-            document.addEventListener('keyup', (evt) => { this.setReleased(evt) });
-        }
+
         this.resetVisualizer = this.resetVisualizer.bind(this);
         this.startVisualizer = this.startVisualizer.bind(this);
 
@@ -58,7 +52,6 @@ export default class PongVisualizer extends Component {
             gameCount: 0,
             agent: new PongAgent(3, 0.9, 0.2, 0.2),
         });
-        //this.props.setVisualizerRendering(true);
         this.componentDidMount();
     }
     resetVisualizer() {
@@ -73,28 +66,6 @@ export default class PongVisualizer extends Component {
             agent: new PongAgent(3, 0.9, 0.2, 0.2),
         });
         this.componentDidMount();
-    }
-
-    setPressed(evt) {
-        if (evt.keyCode === 37) {
-            this.setState({ pressedLeft: true });
-            this.state.pressedLeft = true;
-        }
-        if (evt.keyCode === 39) {
-            this.setState({ pressedRight: true });
-            this.state.pressedRight = true
-        }
-    }
-
-    setReleased(evt) {
-        if (evt.keyCode == 37) {
-            this.setState({ pressedLeft: false });
-            this.state.pressedLeft = false;
-        }
-        if (evt.keyCode == 39) {
-            this.setState({ pressedRight: false });
-            this.state.pressedRight = false;
-        }
     }
 
     componentDidMount() {
@@ -132,27 +103,12 @@ export default class PongVisualizer extends Component {
 
     updatePanel(action) {
         if (this.state.finished) return;
-        if (this.state.humanMode) {
-            if (this.state.pressedLeft && this.pressedRight) {
-                return;
-            }
-            if (this.state.pressedLeft) {
-                this.movePanel(-1);
-            }
-            else if (this.state.pressedRight) {
-                this.movePanel(1);
-            }
-        }
-        else {
-            //console.log(action);
-            this.movePanel(action);
-        }
+        this.movePanel(action);
     }
 
     updateBall() {
         if (this.state.finished) return;
         let { x: x, y: y, r: r, vx: vx, vy: vy, panelx: panelx } = this.state;
-        //console.log(x, y, vx, vy);
         if (x == 0 && y == 0) return;
         x = x + vx;
         y = y + vy;
@@ -206,7 +162,7 @@ export default class PongVisualizer extends Component {
         else if (action === 1) {
             panelx = panelx + panelSpeed;
         }
-        this.setState({ panelx: Math.min(this.state.width - 100, Math.max(0, panelx)) })
+        this.setState({ panelx: Math.min(this.state.width - 100, Math.max(0, panelx)) });
 
     }
 
@@ -283,7 +239,6 @@ export default class PongVisualizer extends Component {
                 if (this.state.gameCount > 10) agent.training = false;
                 const state = this.getState();
                 const action = agent.getAction(state);
-                //console.log(action, agent.weights);
                 const curScore = this.state.score;
                 const curGameCount = this.state.gameCount;
 
@@ -395,15 +350,6 @@ export default class PongVisualizer extends Component {
                                 fill='white'
                                 fontSize={25}
                             ></Text>
-                            {/*
-                            <Text
-                                x={480}
-                                y={15}
-                                text={`Game: ${this.state.gameCount}`}
-                                fontFamily='Calibri'
-                                fill='white'
-                                fontSize={25}
-                            ></Text>*/}
                         </Layer>
                     </Stage></div>
                 <div>
@@ -431,8 +377,4 @@ function distance(a, b) {
     let { x: ax, y: ay } = a;
     let { x: bx, y: by } = b;
     return Math.sqrt(((ax - bx) * (ax - bx) + (ay - by) * (ay - by)));
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
