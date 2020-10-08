@@ -44,7 +44,7 @@ class MinimaxAgent {
                 maxVal = val;
                 maxValAction = action;
             }
-            if (maxVal == val && action === 3){
+            if (maxVal === val && action === 3){
                 maxValAction = action;
             }
         }

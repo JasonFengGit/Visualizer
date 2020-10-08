@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Node from './Node/Node';
-import { dijkstra, BFS, DFS, AStar, getShortestPath, recursiveDivisionMaze, primMaze } from '../Algorithm/pathfindingAlgorithms';
+import { dijkstra, BFS, DFS, AStar, getShortestPath, primMaze } from '../Algorithm/pathfindingAlgorithms';
 import './PathFindingVisualizer.css';
 
 export default class PathFindingVisualizer extends Component {
@@ -156,7 +156,7 @@ export default class PathFindingVisualizer extends Component {
     }
 
     visualizePathfinding() {
-        if (this.state.currentAlgorithm == -1) return;
+        if (this.state.currentAlgorithm === -1) return;
         if (this.state.rendering) return;
 
         this.setState({ visualized: true, rendering: true });
@@ -205,7 +205,7 @@ export default class PathFindingVisualizer extends Component {
             for(let col = 0; col < this.state.numCol; col++){
                 let n = document.getElementById(`node-${row}-${col}`);
                 console.log(n);
-                if(n && (n.className == 'node node-visited' || n.className == 'node node-path')){
+                if(n && (n.className === 'node node-visited' || n.className === 'node node-path')){
                     n.className = 'node';
                 }
             }

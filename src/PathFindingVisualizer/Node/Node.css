@@ -1,6 +1,6 @@
 .node {
   width: 25px;
-  height: 25px; 
+  height: 25px;
   outline: 1px solid rgb(175, 174, 174);
   display: inline-block;
   animation-name: nodeAnimation;
@@ -112,7 +112,7 @@
   0% {
     transform: scale(0.3);
     border-radius: 50%;
-    outline: 0px;
+    outline: 0;
     background-color: rgba(89, 224, 202, 0.75);
     border-radius: 100%;
   }

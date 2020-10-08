@@ -132,7 +132,7 @@ export default class SortingVisualizer extends Component {
                                     val={pile}
                                     size={this.state.size}
                                     isChanging={this.state.changingPiles.indexOf(pileId) !== -1}
-                                    isPivot={this.state.pivot == pile}
+                                    isPivot={this.state.pivot === pile}
                                     colorSetIndex={this.state.colorSetIndex}
                                 ></Pile>
                             )

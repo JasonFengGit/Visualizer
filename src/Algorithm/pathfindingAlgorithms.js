@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 
 function dijkstra(grid, start, finish) {
     const visitedInOrder = [];
@@ -24,7 +23,6 @@ function DFS(grid, start, finish) {
     const visitedInOrder = [];
     let unvisited = [];
     unvisited.push(start);
-    let count = 0;
     while (unvisited.length) {
         const node = unvisited.pop();
         if (node === finish) {
@@ -35,7 +33,6 @@ function DFS(grid, start, finish) {
         visitedInOrder.push(node);
 
         unvisited = unvisited.concat(getUNeighbors(node, grid));
-        count++;
     }
 
     return visitedInOrder;
@@ -45,7 +42,6 @@ function BFS(grid, start, finish) {
     const visitedInOrder = [];
     let unvisited = [];
     unvisited.push(start);
-    let count = 0;
     while (unvisited.length) {
         const node = unvisited.shift();
         if (node === finish) {
@@ -56,7 +52,6 @@ function BFS(grid, start, finish) {
         visitedInOrder.push(node);
 
         unvisited = unvisited.concat(getUNeighbors(node, grid));
-        count++;
     }
 
     return visitedInOrder;
@@ -193,7 +188,6 @@ function primMaze(grid) {
     }
     let visited = [];
     let path = [{ row: sr, col: sc }];
-    let count = 0;
     while (path.length > 0) {
         const index = randomSelect(path);
         const node = path[index];
@@ -207,7 +201,6 @@ function primMaze(grid) {
         }
         path = path.concat(unconnected);
 
-        count++;
     }
 }
 

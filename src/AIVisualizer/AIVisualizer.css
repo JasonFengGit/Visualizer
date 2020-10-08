@@ -12,7 +12,7 @@
     white-space: nowrap; 
     margin: 0 auto; 
     letter-spacing: .15em;
-    animation: 
+    animation:
         typing 2.0s steps(30, end),
         blink-caret .5s step-end infinite;
 }
@@ -23,12 +23,10 @@
 }
 
 @keyframes blink-caret {
-    from, to { 
+    from, to {
       border-right: .15em solid; border-color: transparent }
     50% { border-right: .15em solid; border-color: rgb(0, 0, 0) }
 }
-/* Stars 
-------------------------------------- */
 
 #space, .stars {
   overflow: hidden;

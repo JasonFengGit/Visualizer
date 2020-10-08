@@ -73,6 +73,8 @@ export default class AIVisualizer extends Component {
             case 3:
                 renderObj = <NNSnakeVisualizer setVisualizerRendering={this.props.setVisualizerRendering} getFunctions={this.getAIFunctions}></NNSnakeVisualizer>
                 break;
+            default:
+                break;
         }
         return (
             <div>{renderObj}</div>

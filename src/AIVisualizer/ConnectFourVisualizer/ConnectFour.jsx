@@ -107,7 +107,7 @@ export default class ConnectFour extends Component {
     }
 
     AITakeMove() {
-        if (checkWinner(this.state.board) === null && this.state.currentPlayer == this.state.aiPlayer) {
+        if (checkWinner(this.state.board) === null && this.state.currentPlayer === this.state.aiPlayer) {
             const boardCopy = this.state.board.map((a) => a.slice());
             const action = this.state.minimaxAgent.getAction(boardCopy);
             this.move(action);
@@ -147,7 +147,7 @@ export default class ConnectFour extends Component {
             if (this.state.depth === 6) {
                 boardCopy[colId][0] = null;
             }
-            else if (this.state.currentPlayer == this.state.humanPlayer) {
+            else if (this.state.currentPlayer === this.state.humanPlayer) {
                 boardCopy[colId][0] = this.state.colors[this.state.currentPlayer];
             }
             this.setState({
@@ -159,7 +159,7 @@ export default class ConnectFour extends Component {
     }
 
     componentDidMount() {
-        if (this.state.aiPlayer == 0) {
+        if (this.state.aiPlayer === 0) {
             this.AITakeMove();
         }
     }
@@ -234,7 +234,7 @@ export default class ConnectFour extends Component {
                         </div>
                         {buttons}
                     </div>
-                    <h1 style={{ position: "relative", marginTop: "-170px" }}>{this.state.winner == "tie" ? "Tie" : `Winner: ${this.state.winner === this.state.humanPiece ? "You" : "AI"}`}</h1>
+                    <h1 style={{ position: "relative", marginTop: "-170px" }}>{this.state.winner === "tie" ? "Tie" : `Winner: ${this.state.winner === this.state.humanPiece ? "You" : "AI"}`}</h1>
                 </div>
 
             );
@@ -268,7 +268,7 @@ export default class ConnectFour extends Component {
                     </div>
 
                     {buttons}
-                    <img id="loadingImgT" className="loadingImgT" src="https://linkpicture.com/q/Double-Ring-1s-200px-2.gif" height="100px" width="100px" style={{ marginLeft: "10px", position: "absolute", zIndex: 0 }}></img>;
+                    <img id="loadingImgT" className="loadingImgT" src="https://linkpicture.com/q/Double-Ring-1s-200px-2.gif" height="100px" width="100px" style={{ marginLeft: "10px", position: "absolute", zIndex: 0 }} alt></img>;
                     <div>
                         <h5 class="connectFourDes" style={{ position: "absolute", marginTop: "160px", marginLeft: "30px", textAlign: "left" }}>
                             This is a chess game known as "Connect Four", which you<br />

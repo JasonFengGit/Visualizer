@@ -1,4 +1,4 @@
-import React, { Component, Text } from 'react';
+import React, { Component } from 'react';
 import TextLoop from "react-text-loop";
 import PathFindingVisualizer from './PathFindingVisualizer/PathFindingVisualizer';
 import SortingVisualizer from './SortingVisualizer/SortingVisualizer';
@@ -68,7 +68,7 @@ export default class Visualizer extends Component {
                             <p class="secondline lead">Click on one of the categories below to visualize algorithms.</p>
 
                         </h1>
-                        <a href='' class='mainpage-b' onClick={() => {
+                        <a href='#' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'pathfinding' });
                                 this.setState({ currentAlgorithm: null, pathClicked: true });
@@ -77,7 +77,7 @@ export default class Visualizer extends Component {
                             <span></span>
                             PATH FINDING
                         </a>
-                        <a href='' class='mainpage-b' onClick={() => {
+                        <a href='#' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'sorting', currentAlgorithm: null, sortingClicked: true });
                             }
@@ -85,7 +85,7 @@ export default class Visualizer extends Component {
                             <span></span>
                             SORTING
                         </a>
-                        <a href='' class='mainpage-b' onClick={() => {
+                        <a href='#' class='mainpage-b' onClick={() => {
                             if (!this.state.rendering) {
                                 this.setState({ mode: 'ai', currentAlgorithm: null, AIClicked: true });
                             }
@@ -180,7 +180,7 @@ export default class Visualizer extends Component {
                     </div>
 
                     <a href="https://github.com/JasonFengGit" style={{ marginLeft: "32%" }}>
-                        <img class="githubimg" src="https://www.linkpicture.com/q/UIHere_1.png" width="40px" height="40px" style={{ opacity: "0.7 !important" }}></img>
+                        <img class="githubimg" src="https://www.linkpicture.com/q/UIHere_1.png" width="40px" height="40px" style={{ opacity: "0.7 !important" }} alt></img>
                     </a>
                 </nav>
 

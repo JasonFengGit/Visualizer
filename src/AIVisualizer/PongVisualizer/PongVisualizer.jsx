@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Rect, Line, Konva, Circle, Text } from 'react-konva';
+import { Stage, Layer, Rect, Circle, Text } from 'react-konva';
 import PongAgent from "./PongAgent.js";
 import "./PongVisualizer.css";
 
@@ -109,7 +109,7 @@ export default class PongVisualizer extends Component {
     updateBall() {
         if (this.state.finished) return;
         let { x, y, r, vx, vy, panelx } = this.state;
-        if (x == 0 && y == 0) return;
+        if (x === 0 && y === 0) return;
         x = x + vx;
         y = y + vy;
         if (x > this.state.width - r - 5 || x < r + 5) {
@@ -256,7 +256,7 @@ export default class PongVisualizer extends Component {
                 this.state.framecount += 1;
 
             }, 10 * this.state.framecount);
-            if (w1 !== NaN && !this.state.finished) {
+            if (!isNaN(w1) && !this.state.finished) {
                 this.state.storedWeights = {
                     "min_dis_to_dot": w1,
                     "dis_to_panel": w2,

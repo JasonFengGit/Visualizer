@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Konva from 'react-konva';
-import { Stage, Layer, Rect, Line, Circle, Text } from 'react-konva';
+import { Stage, Layer, Line, Circle, Text } from 'react-konva';
 import { Perceptron, random } from './Perceptron';
 import './PtronVisualizer.css';
 
@@ -129,7 +128,7 @@ export default class PtronVisualizer extends Component {
         let eM = aM - this.state.M;
         let eB = aB - this.state.B;
         let textComponet;
-        if (this.state.count != 0) {
+        if (this.state.count !== 0) {
             textComponet = <><Text
                 x={550}
                 y={50}
