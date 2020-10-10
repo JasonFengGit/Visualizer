@@ -47,6 +47,7 @@ class MinimaxAgent {
             if (maxVal === val && action === 3){
                 maxValAction = action;
             }
+            console.log(action, val);
         }
         return maxValAction;
     }
@@ -83,10 +84,10 @@ class MinimaxAgent {
         const count2 = this.count(four, this.aiPiece);
         if(countN === 4 || (count1 > 0 && count2 > 0)) return 0;
         if(count1 === 4){
-            return -10e20;
+            return -10e22;
         } 
         if(count2 === 4){
-            return 10e20;
+            return 10e22;
         } 
         if(count1 === 0){
             return Math.pow(10*count2, count2);

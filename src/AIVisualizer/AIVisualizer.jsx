@@ -23,9 +23,10 @@ export default class AIVisualizer extends Component {
     }
 
     componentDidMount(){
+        // combinatronics.com
         this.newScript("https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/TweenLite.min.js");
         this.newScript("https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/EasePack.min.js");
-        this.newScript("https://drive.google.com/uc?export=view&id=1mvQtt6H9xa1k3Iwsw5PoYFDq8zEmg_SO");
+        this.newScript("https://combinatronics.com/JasonFengGit/Visualizer/master/src/AIVisualizer/networkAnimation.js");
     }
 
     getAIFunctions(run, reset) {
