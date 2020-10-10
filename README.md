@@ -1,4 +1,8 @@
 ## Visualizer
+[![CodeFactor](https://www.codefactor.io/repository/github/jasonfenggit/visualizer/badge)](https://www.codefactor.io/repository/github/jasonfenggit/visualizer)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://github.com/JasonFengGit/Visualizer)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/JasonFengGit/Visualizer/blob/master/LICENSE)
+
 
 This project is developed with React to help people to view algorithmic processes intuitively and entertainingly. <br/>
 You may visit the page at <a href="https://jasonfenggit.github.io/Visualizer/">jasonfenggit.github.io/Visualizer/</a> with Chrome.
