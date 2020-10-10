@@ -172,7 +172,7 @@ export default class SortingVisualizer extends Component {
                 
                 <h6 class='algoDescription'>{this.state.currentAlgorithm === -1 ? "Welcome to Sorting. Select an algorithm first." : this.state.descriptions[this.state.currentAlgorithm]}</h6>
                 <h5 class='algoComplexity' style={{marginTop: "-4.5%", color:"rgb(90,90,90)"}}>{
-                    this.state.currentAlgorithm == -1 ? 
+                    this.state.currentAlgorithm === -1 ? 
                         "" : this.state.currentAlgorithm < 3 ?
                             nSquare : nLogn
                 }</h5>
