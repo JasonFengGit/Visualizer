@@ -5,7 +5,7 @@
 
 
 This project is developed with React to help people to view algorithmic processes intuitively and entertainingly. <br/>
-You may visit the page at <a href="https://jasonfenggit.github.io/Visualizer/">jasonfenggit.github.io/Visualizer/</a> with Chrome.
+You may visit the page at <a href="https://jasonfenggit.github.io/Visualizer/">jasonfenggit.github.io/Visualizer/</a> with Chrome (use full screen view to achieve better experience). 
 
 
 ## Algorithms Included
@@ -43,5 +43,6 @@ You may find me through <a href="mailto:jasonfen@usc.edu">email</a> with any com
 - Customizable learning parameters and model architectures
 - Allowing submissions of codes/models
 - User rankings by their models' performances
+- ...
 
 #### ENJOY THE BEAUTY OF ALGORITHMS!
