@@ -107,6 +107,8 @@ h1+.mainpage-b{
     background: rgb(255, 255, 255);
 }
 .mainpage-b{
+    
+    border-radius: 3px;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
