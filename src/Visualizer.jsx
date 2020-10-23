@@ -180,7 +180,7 @@ export default class Visualizer extends Component {
                     </div>
 
                     <a href="https://github.com/JasonFengGit" style={{ marginLeft: "32%" }}>
-                        <img class="githubimg" src="https://www.linkpicture.com/q/UIHere_1.png" width="40px" height="40px" style={{ opacity: "0.7 !important" }} alt></img>
+                        <img class="githubimg" width="40px" height="40px" style={{ opacity: "0.7 !important"}} alt></img>
                     </a>
                 </nav>
 
