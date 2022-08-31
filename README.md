@@ -24,9 +24,6 @@ You may visit the page at <a href="https://jasonfenggit.github.io/Visualizer/">j
   - Simple Perceptron
   - Approximate Q Learning
   - Minimax(Alpha–beta pruning)
-  - *General Q Learning(in progress)*
-  - *Bayes Network(in progress)*
-  - *Neural Network(in progress)*
 
 ## How To Use
 
